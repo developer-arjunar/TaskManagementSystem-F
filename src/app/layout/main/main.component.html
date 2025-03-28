@@ -1,0 +1,62 @@
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
+        <div class="sidebar-header">
+            <h3>{{ isSidebarCollapsed ? 'AD' : 'Dashboard' }}</h3>
+            <button class="toggle-btn" (click)="toggleSidebar()">
+                <i class="fas" [class.fa-angle-double-left]="!isSidebarCollapsed"
+                    [class.fa-angle-double-right]="isSidebarCollapsed"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                @for (item of navItems; track $index) {
+                    <li [class.active]="item.active">
+                        <a [routerLink]="item.link" routerLinkActive="active">
+                            <i class="fas fa-{{ item.icon }}"></i>
+                            <span class="nav-text">{{ item.label }}</span>
+                        </a>
+                    </li>
+                }
+                <li>
+                    <a (click)="logout()">
+                      <i class="fas fa-sign-out-alt"></i>
+                      <span class="nav-text">Logout</span>
+                    </a>
+                  </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="mobile-toggle" (click)="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="assets/images/user-avatar.jpg" alt="User">
+                    <span>{{ currentUser }}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

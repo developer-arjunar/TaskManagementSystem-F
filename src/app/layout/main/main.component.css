@@ -1,0 +1,240 @@
+/* @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css'; */
+
+:host {
+    display: block;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+    background-color: #f5f7fa;
+}
+
+.sidebar {
+    width: 250px;
+    background: #2c3e50;
+    color: #fff;
+    transition: all 0.3s;
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .nav-text {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-header h3 {
+    display: none;
+}
+
+.sidebar.collapsed .toggle-btn i {
+    transform: rotate(180deg);
+}
+
+.sidebar .sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .sidebar-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.sidebar .sidebar-header .toggle-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.sidebar .sidebar-nav {
+    padding: 20px 0;
+}
+
+.sidebar .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .sidebar-nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #b8c7ce;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar .sidebar-nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar .sidebar-nav ul li a i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar .sidebar-nav ul li.active a {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-left: 3px solid #3c8dbc;
+}
+
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: all 0.3s;
+}
+
+.sidebar.collapsed~.main-content {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.top-nav {
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.top-nav .nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.top-nav .nav-left .mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.top-nav .nav-left .search-box {
+    position: relative;
+}
+
+.top-nav .nav-left .search-box input {
+    padding: 8px 15px 8px 35px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 250px;
+}
+
+.top-nav .nav-left .search-box input:focus {
+    outline: none;
+    border-color: #3c8dbc;
+}
+
+.top-nav .nav-left .search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.top-nav .nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.top-nav .nav-right .notification {
+    position: relative;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.top-nav .nav-right .notification i {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.top-nav .nav-right .notification .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff5b5b;
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-nav .nav-right .user-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.top-nav .nav-right .user-profile img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.top-nav .nav-right .user-profile span {
+    margin-right: 5px;
+    font-weight: 500;
+}
+
+.content-area {
+    padding: 20px;
+    min-height: calc(100vh - 70px);
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .top-nav .nav-left .mobile-toggle {
+        display: block;
+    }
+
+    .sidebar.collapsed~.main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
