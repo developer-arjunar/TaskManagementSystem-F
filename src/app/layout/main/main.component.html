@@ -2,28 +2,60 @@
     <!-- Sidebar -->
     <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
         <div class="sidebar-header">
-            <h3>{{ isSidebarCollapsed ? 'AD' : 'Dashboard' }}</h3>
+            <h2>Task Manager</h2>
+            <!-- <h3>{{ isSidebarCollapsed ? 'AD' : 'Dashboard' }}</h3>
             <button class="toggle-btn" (click)="toggleSidebar()">
                 <i class="fas" [class.fa-angle-double-left]="!isSidebarCollapsed"
                     [class.fa-angle-double-right]="isSidebarCollapsed"></i>
-            </button>
+            </button> -->
         </div>
         <nav class="sidebar-nav">
             <ul>
-                @for (item of navItems; track $index) {
-                    <li [class.active]="item.active">
-                        <a [routerLink]="item.link" routerLinkActive="active">
-                            <i class="fas fa-{{ item.icon }}"></i>
-                            <span class="nav-text">{{ item.label }}</span>
-                        </a>
-                    </li>
-                }
+                <!-- @for (item of navItems; track $index) {
+                <li [class.active]="item.active">
+                    <a [routerLink]="item.link" routerLinkActive="active">
+                        <i class="fas fa-{{ item.icon }}"></i>
+                        <span class="nav-text">{{ item.label }}</span>
+                    </a>
+                </li>
+                } -->
+
+                <li [class.active]="false">
+                    <a [routerLink]="'/dashboard'" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li [class.active]="false">
+                    <a [routerLink]="'/all-tasks'" routerLinkActive="active">
+                        <i class="fas fa-tasks"></i>
+                        <span class="nav-text">All Tasks</span>
+                    </a>
+                </li>
+                <li [class.active]="false">
+                    <a [routerLink]="'/my-tasks'" routerLinkActive="active">
+                        <i class="fas fa-tasks"></i>
+                        <span class="nav-text">My Tasks</span>
+                    </a>
+                </li>
+                <li [class.active]="false">
+                    <a [routerLink]="'/notifications'" routerLinkActive="active">
+                        <i class="fas fa-bell"></i>
+                        <span class="nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li [class.active]="false">
+                    <a [routerLink]="'/profile'" routerLinkActive="active">
+                        <i class="fas fa-user"></i>
+                        <span class="nav-text">Profile</span>
+                    </a>
+                </li>
                 <li>
                     <a (click)="logout()">
-                      <i class="fas fa-sign-out-alt"></i>
-                      <span class="nav-text">Logout</span>
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-text">Logout</span>
                     </a>
-                  </li>
+                </li>
             </ul>
         </nav>
     </aside>
@@ -33,13 +65,13 @@
         <!-- Top Navigation -->
         <header class="top-nav">
             <div class="nav-left">
-                <button class="mobile-toggle" (click)="toggleSidebar()">
+                <!-- <button class="mobile-toggle" (click)="toggleSidebar()">
                     <i class="fas fa-bars"></i>
-                </button>
-                <div class="search-box">
+                </button> -->
+                <!-- <div class="search-box">
                     <input type="text" placeholder="Search...">
                     <i class="fas fa-search"></i>
-                </div>
+                </div> -->
             </div>
             <div class="nav-right">
                 <div class="notification">

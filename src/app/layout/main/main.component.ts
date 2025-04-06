@@ -12,14 +12,15 @@ import { AuthService } from '../../core/auth.service';
 export class MainComponent {
   isSidebarCollapsed = false;
   currentUser = 'Admin User';
+  currentUserRole = 'ADMIN';
   
   navItems = [
-    { label: 'Dashboard', icon: 'tachometer-alt', link: '/dashboard', active: false },
-    { label: 'Users', icon: 'users', link: '/users', active: false },
-    { label: 'Products', icon: 'box', link: '/products', active: false },
-    { label: 'Orders', icon: 'shopping-cart', link: '/orders', active: false },
-    { label: 'Settings', icon: 'cog', link: '/settings', active: false },
-    { label: 'Reports', icon: 'chart-bar', link: '/reports', active: false }
+    { label: 'Dashboard', icon: 'tachometer-alt', link: '/dashboard', active: true },
+    { label: 'All Tasks', icon: 'tasks', link: '/all-tasks', active: true },
+    { label: 'My Tasks', icon: 'tasks', link: '/my-tasks', active: false },
+    { label: 'Notifications', icon: 'bell', link: '/notifications', active: false },
+    { label: 'Profile', icon: 'user', link: '/profile', active: false },
+    // { label: 'Reports', icon: 'chart-bar', link: '/reports', active: false }
   ];
 
   constructor(private authService: AuthService) {}
