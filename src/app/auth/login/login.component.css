@@ -1,0 +1,123 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.login-box .login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-box .login-logo img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.login-box .login-logo h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.login-box .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.login-box .card .card-body {
+    padding: 30px;
+}
+
+.login-box .form-group {
+    margin-bottom: 20px;
+}
+
+.login-box .form-group label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.login-box .form-group .input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.login-box .form-group .form-control {
+    border-left: none;
+    padding-left: 0;
+}
+
+.login-box .form-group .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.login-box .btn-primary {
+    background-color: #667eea;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.login-box .btn-primary:hover {
+    background-color: #5a6fd1;
+}
+
+.login-box .btn-primary:disabled {
+    background-color: #a0a9d8;
+}
+
+.login-box .login-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.login-box .login-footer a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.login-box .login-footer a:hover {
+    text-decoration: underline;
+}
+
+.login-box .login-footer p {
+    margin: 8px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 576px) {
+    .login-box .card-body {
+        padding: 20px;
+    }
+}
