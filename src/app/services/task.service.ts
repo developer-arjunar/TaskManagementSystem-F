@@ -14,4 +14,8 @@ export class TaskService {
   saveNewTask(taskData: any): Observable<any> {
     return this.httpClient.post(this.API_URL + 'api/Tasks', taskData);
   }
+
+  getAllTasks(): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks');
+  }
 }

@@ -40,8 +40,6 @@ export class TaskFormComponent implements OnInit {
   loadTaskAssigneeDropDown(): void {
     this.userService.getAllUsers().subscribe(
       (res: any[]) => {
-        console.log(res);
-        
       this.usersList = res;
       },
       (error: any) => {
