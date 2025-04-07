@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../services/user.service';
+import { TaskService } from '../../../services/task.service';
 
 @Component({
   selector: 'app-task-form',
@@ -10,11 +12,20 @@ import Swal from 'sweetalert2';
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css'
 })
-export class TaskFormComponent {
+export class TaskFormComponent implements OnInit {
   taskForm! : FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  public usersList: Array<any> = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private taskService: TaskService
+  ) {}
+
+  ngOnInit(): void {
     this.initiateForm();
+    this.loadTaskAssigneeDropDown();
   }
 
   initiateForm() {
@@ -26,14 +37,56 @@ export class TaskFormComponent {
     });
   }
 
+  loadTaskAssigneeDropDown(): void {
+    this.userService.getAllUsers().subscribe(
+      (res: any[]) => {
+        console.log(res);
+        
+      this.usersList = res;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  
   onSubmit() {
     if(this.taskForm.valid) {
-      console.log("Successfully Implemented");
+      let taskData = {
+        name: this.taskForm.value.taskName,
+        description: this.taskForm.value.taskDescription,
+        dueDate: this.taskForm.value.taskDueDate,
+        assigneeId: this.taskForm.value.taskAssignee
+      }
+
+      this.taskService.saveNewTask(taskData).subscribe(
+        (res: any[]) => {
+          Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+          });
+
+          this.taskForm.reset();
+        },
+        (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      );
+    } else {
       Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success"
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!"
       });
     }
+  }
+
+  trackByFn(index: number, item: any): any {
+    return item.id || index;
   }
 }

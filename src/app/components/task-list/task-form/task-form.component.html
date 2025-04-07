@@ -18,30 +18,54 @@
                                 <label for="taskName" class="form-label">Task Name</label>
                                 <input type="text" class="form-control" id="taskName" formControlName="taskName"
                                     placeholder="Enter Task Name">
+                                @if (taskForm.get('taskName')?.invalid && (taskForm.get('taskName')?.touched || taskForm.get('taskName')?.dirty)) {
+                                    <div class="text-danger">
+                                        @if (taskForm.get('taskName')?.errors?.['required']) {
+                                            <small>Task Name is required.</small>
+                                        }
+                                    </div>
+                                }
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="taskDescription" class="form-label">Task Description</label>
-                                <textarea class="form-control" id="taskDescription" rows="3" formControlName="taskName"
+                                <textarea class="form-control" id="taskDescription" rows="3" formControlName="taskDescription"
                                     placeholder="Enter Task Description"></textarea>
+                                    @if (taskForm.get('taskDescription')?.invalid && (taskForm.get('taskDescription')?.touched || taskForm.get('taskDescription')?.dirty)) {
+                                        <div class="text-danger">
+                                            @if (taskForm.get('taskDescription')?.errors?.['required']) {
+                                                <small>Task Description is required.</small>
+                                            }
+                                        </div>
+                                    }
                             </div>
                         </div>
                         <div class="row d-flex justify-content-between">
                             <div class="mb-3">
                                 <label for="taskAssignee" class="form-label">Task Assignee</label>
-                                <!-- <input type="text" class="form-control" list="taskAssigneeOptions" id="taskAssignee" formControlName="taskAssignee"
-                                    placeholder="Enter Task Assignee"> -->
                                 <select class="form-select" id="taskAssignee" formControlName="taskAssignee">
                                     <option value="" disabled selected>Select Task Assignee</option>
-                                    <option value="Arjuna Randeniya">Arjuna Randeniya</option>
-                                    <option value="Gihan Perera">Gihan Perera</option>
-                                    <option value="Lakshan Chalaka">Lakshan Chalaka</option>
-                                    <option value="Anushka Chathumal">Anushka Chathumal</option>
-                                    <option value="Chanaka Herath">Chanaka Herath</option>
+                                    @for (user of usersList; track user.id) {
+                                        <option value='{{ user.id }}'>{{ user.name }}</option>
+                                    }
                                 </select>
+                                @if (taskForm.get('taskAssignee')?.invalid && (taskForm.get('taskAssignee')?.touched || taskForm.get('taskAssignee')?.dirty)) {
+                                    <div class="text-danger">
+                                        @if (taskForm.get('taskAssignee')?.errors?.['required']) {
+                                            <small>Task Assignee is required.</small>
+                                        }
+                                    </div>
+                                }
                             </div>
                             <div class="mb-3">
                                 <label for="taskDueDate" class="form-label">Task Due Date</label>
                                 <input type="date" class="form-control" id="taskDueDate" formControlName="taskDueDate">
+                                @if (taskForm.get('taskDueDate')?.invalid && (taskForm.get('taskDueDate')?.touched || taskForm.get('taskDueDate')?.dirty)) {
+                                    <div class="text-danger">
+                                        @if (taskForm.get('taskDueDate')?.errors?.['required']) {
+                                            <small>Task Due Date is required.</small>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
