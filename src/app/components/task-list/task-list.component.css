@@ -267,11 +267,11 @@
   }
   
   @media (max-width: 600px) {
-    .step {
+    /* .step {
       padding-left: 30px;
-    }
+    } */
     
-    .step-dot {
+    /* .step-dot {
       width: 20px;
       height: 20px;
       left: 5px;
@@ -279,7 +279,7 @@
     
     .step-line {
       left: 9px;
-    }
+    } */
   }
 
 

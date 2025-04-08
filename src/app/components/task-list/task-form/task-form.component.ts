@@ -32,9 +32,6 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initiateForm();
-    this.loadTaskAssigneeDropDown();
-
     this.route.paramMap.subscribe(params => {
       this.taskId = params.get('id');
       
@@ -43,6 +40,9 @@ export class TaskFormComponent implements OnInit {
         this.getTaskById(this.taskId);
       }
     });
+
+    this.initiateForm();
+    this.loadTaskAssigneeDropDown();
   }
 
   initiateForm() {
@@ -50,6 +50,8 @@ export class TaskFormComponent implements OnInit {
       taskName: ['', Validators.required],
       taskDescription: ['', Validators.required],
       taskAssignee: ['', Validators.required],
+      // taskStatus: ['', Validators.required],
+      taskStatus: [{value: 'OPENED', disabled: !this.isUpdate}, Validators.required],
       taskDueDate: ['', Validators.required]
     });
   }
@@ -72,8 +74,12 @@ export class TaskFormComponent implements OnInit {
           name: this.taskForm.value.taskName,
           description: this.taskForm.value.taskDescription,
           dueDate: this.taskForm.value.taskDueDate,
+          status: this.taskForm.get('taskStatus')?.value,
           assigneeId: this.taskForm.value.taskAssignee
         }
+
+        console.log(taskData);
+        
 
         this.taskService.saveNewTask(taskData).subscribe(
           (res: any[]) => {
@@ -84,6 +90,7 @@ export class TaskFormComponent implements OnInit {
             });
   
             this.taskForm.reset();
+            this.initiateForm();
           },
           (error) => {
             Swal.fire({
@@ -99,7 +106,7 @@ export class TaskFormComponent implements OnInit {
           description: this.taskForm.value.taskDescription,
           dueDate: this.taskForm.value.taskDueDate,
           updatedDate: new Date(),
-          status: "OPENED",
+          status: this.taskForm.value.taskStatus,
           assigneeId: this.taskForm.value.taskAssignee
         }
 
@@ -141,6 +148,7 @@ export class TaskFormComponent implements OnInit {
           taskName: res.name,
           taskDescription: res.description,
           taskAssignee: res.assignee.id,
+          taskStatus: res.status,
           taskDueDate: this.datePipe.transform(res.dueDate, 'yyyy-MM-dd')
         })
       },

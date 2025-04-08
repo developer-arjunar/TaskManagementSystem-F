@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row d-flex justify-content-between">
-                            <div class="mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="taskAssignee" class="form-label">Task Assignee</label>
                                 <select class="form-select" id="taskAssignee" formControlName="taskAssignee">
                                     <option value="" disabled selected>Select Task Assignee</option>
@@ -55,6 +55,31 @@
                                     </div>
                                 }
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="taskStatus" class="form-label">Task Status</label>
+                                <!-- @if (isUpdate == false) { -->
+                                    <select class="form-select" id="taskStatus" formControlName="taskStatus">
+                                        <option value="OPENED" selected>OPENED</option>
+                                        <option value="IN PROGRESS">IN PROGRESS</option>
+                                        <option value="COMPLETED">COMPLETED</option>
+                                    </select>
+                                <!-- } @else {
+                                    <select class="form-select" id="taskStatus" formControlName="taskStatus" [disabled]="false">
+                                        <option value="OPENED">OPENED</option>
+                                        <option value="IN PROGRESS">IN PROGRESS</option>
+                                        <option value="COMPLETED">COMPLETED</option>
+                                    </select>
+                                } -->
+                                
+                                <!-- @if (taskForm.get('taskAssignee')?.invalid && (taskForm.get('taskAssignee')?.touched || taskForm.get('taskAssignee')?.dirty)) {
+                                    <div class="text-danger">
+                                        @if (taskForm.get('taskAssignee')?.errors?.['required']) {
+                                            <small>Task Assignee is required.</small>
+                                        }
+                                    </div>
+                                } -->
+                            </div>
+                        </div>
                             <div class="mb-3">
                                 <label for="taskDueDate" class="form-label">Task Due Date</label>
                                 <input type="date" class="form-control" id="taskDueDate" formControlName="taskDueDate">
@@ -66,7 +91,7 @@
                                     </div>
                                 }
                             </div>
-                        </div>
+                        <!-- </div> -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             @if (isUpdate == false) {
                                 <button type="submit" class="btn btn-success me-md-2">Save Task</button>
