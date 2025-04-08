@@ -1,11 +1,10 @@
 <div class="dashboard">
     <div class="page-header">
-        <h1>Add Task</h1>
-        <!-- <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-            </ol>
-        </nav> -->
+        @if (isUpdate == false) {
+            <h1>Add Task</h1>
+        } @else {
+            <h1>Update Task</h1>
+        }
     </div>
 
     <!-- <div class="d-flex justify-content-center row"> -->
@@ -69,8 +68,12 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-success me-md-2">Save Task</button>
-                            <button type="button" class="btn btn-danger">Cancel</button>
+                            @if (isUpdate == false) {
+                                <button type="submit" class="btn btn-success me-md-2">Save Task</button>
+                            } @else {
+                                <button type="submit" class="btn btn-success me-md-2">Update Task</button>
+                            }
+                            <button type="button" class="btn btn-danger" (click)="navigateToTasksList()">Cancel</button>
                         </div>
                     </form>
                 </div>

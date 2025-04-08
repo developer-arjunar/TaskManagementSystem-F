@@ -18,4 +18,20 @@ export class TaskService {
   getAllTasks(): Observable<any> {
     return this.httpClient.get(this.API_URL + 'api/Tasks');
   }
+
+  getTaskById(id: any): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks/' + id);
+  }
+
+  getTaskByAssigneeId(assigneeId: any): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks/byAssigneeId/' + assigneeId);
+  }
+
+  updateTask(id: any, taskUpdateData: any): Observable<any> {
+    return this.httpClient.put(this.API_URL + 'api/Tasks/' + id, taskUpdateData);
+  }
+
+  deleteTask(id: any): Observable<any> {
+    return this.httpClient.delete(this.API_URL + 'api/Tasks/' + id);
+  }
 }

@@ -29,6 +29,10 @@ export const routes: Routes = [
           component: TaskFormComponent
         },
         {
+          path: 'tasks/update-task/:id',
+          component: TaskFormComponent
+        },
+        {
           path: '',
           redirectTo: 'dashboard',
           pathMatch: 'full'

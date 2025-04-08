@@ -1,61 +1,82 @@
 <div class="dashboard">
-    <div class="page-header">
-        <h1>Task List</h1>
-        <!-- <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-            </ol>
-        </nav> -->
-    </div>
+  <div class="page-header">
+    <h1>Task List</h1>
+  </div>
 
-    <!-- <div class="d-flex justify-content-center row"> -->
-        <div class="col-md-12">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                              <th scope="col" class="text-center">#</th>
-                              <th scope="col" class="text-center">Task Name</th>
-                              <th scope="col" class="text-center">Task Assignee</th>
-                              <th scope="col" class="text-center">Task Status</th>
-                              <th scope="col" class="text-center">Task Due Date</th>
-                              <th scope="col" class="text-center">Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @for (task of tasksList; track task.id; let i = $index) {
-                                <tr>
-                                    <th scope="row" class="text-center">{{ i + 1 }}</th>
-                                    <td>{{ task.name }}</td>
-                                    <td class="text-center">{{ task.assignee.name }}</td>
-                                    <td class="text-center">
-                                        @if (task.status == 'OPENED') {
-                                            <span class="badge rounded-pill text-bg-info">{{ task.status }}</span>
-                                        } @else if (task.status == 'IN_PROGRESS') {
-                                            <span class="badge rounded-pill text-bg-warning">{{ task.status }}</span>
-                                        } @else if (task.status == 'COMPLETED') {
-                                            <span class="badge rounded-pill text-bg-success">{{ task.status }}</span>
-                                        }
-                                    </td>
-                                    <td class="text-center">{{ task.dueDate }}</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-secondary ms-2">
-                                            <i class="fas fa-pen-to-square"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-danger ms-2">
-                                            <i class="fas fa-trash-can"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-                          </tbody>
-                    </table>
 
-                    <div class="vertical-stepper">
+  <div class="col-md-12">
+    <div class="card stat-card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div class="col-auto">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="taskAssignee" class="col-form-label">Task Assignee</label>
+              </div>
+              <div class="col-auto">
+                <form [formGroup]="taskAssigneeForm">
+                  <select id="taskAssignee" class="form-select form-select-sm" formControlName="taskAssignee" (ngModelChange)="loadTasksTableOnChangeAssignee($event)">
+                    <option value="" disabled selected>Select Task Assignee</option>
+                    <option value="all">All</option>
+                    @for (assignee of usersList; track assignee.id) {
+                      <option value='{{ assignee.id }}'>{{ assignee.name }}</option>
+                    }
+                  </select>
+                </form> 
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-sm mb-2" (click)="navigateToTaskForm()">Add New Task</button>
+          </div>
+        </div>
+        
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">#</th>
+              <th scope="col" class="text-center">Task Name</th>
+              <th scope="col" class="text-center">Task Assignee</th>
+              <th scope="col" class="text-center">Task Status</th>
+              <th scope="col" class="text-center">Task Due Date</th>
+              <th scope="col" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (task of tasksList; track task.id; let i = $index) {
+            <tr>
+              <th scope="row" class="text-center">{{ i + 1 }}</th>
+              <td>{{ task.name }}</td>
+              <td class="text-center">{{ task.assignee.name }}</td>
+              <td class="text-center">
+                @if (task.status == 'OPENED') {
+                <span class="badge rounded-pill text-bg-info">{{ task.status }}</span>
+                } @else if (task.status == 'IN_PROGRESS') {
+                <span class="badge rounded-pill text-bg-warning">{{ task.status }}</span>
+                } @else if (task.status == 'COMPLETED') {
+                <span class="badge rounded-pill text-bg-success">{{ task.status }}</span>
+                }
+              </td>
+              <td class="text-center">{{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal" (click)="getTaskView(task.id)">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                  <i class="fas fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                  <i class="fas fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- <div class="vertical-stepper">
                         <div class="step">
                           <div class="step-dot"></div>
                           <div class="step-line"></div>
@@ -69,63 +90,99 @@
                           <div class="step-content">
                             Second step content
                           </div>
-                        </div>
-                        <!-- <div class="step">
+                        </div> -->
+        <!-- <div class="step">
                           <div class="step-dot"></div>
                           <div class="step-content">
                             Final step content
                           </div>
                         </div> -->
-                      </div>
+        <!-- </div> -->
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                          <div class="modal-content">
-                            <!-- <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div> -->
-                            <div class="modal-body">
-                              <h3 class="text-center">Task Details</h3>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h3 class="text-center">Task Details</h3>
+
+                <h6 class="mb-0">Task Name</h6>
+                <p class="fs-6">{{ taskById.name }}</p>
+
+                <h6 class="mb-0">Task Description</h6>
+                <p class="fs-6">{{ taskById.description }}</p>
+
+                <h6 class="mb-0">Task Assignee</h6>
+                <p class="fs-6">{{ taskAssignee.name }}</p>
+
+                <div class="d-flex justify-content-between">
+                  <div class="col-md-6">
+                    <h6 class="mb-0">Task Status</h6>
+                    @if (taskById.status == 'OPENED') {
+                    <span class="badge rounded-pill text-bg-info">{{ taskById.status }}</span>
+                    } @else if (taskById.status == 'IN_PROGRESS') {
+                    <span class="badge rounded-pill text-bg-warning">{{ taskById.status }}</span>
+                    } @else if (taskById.status == 'COMPLETED') {
+                    <span class="badge rounded-pill text-bg-success">{{ taskById.status }}</span>
+                    }
+                  </div>
+
+                  <div class="col-md-6">
+                    <h6 class="mb-0">Task Due Date</h6>
+                    <p class="fs-6">{{ taskById.dueDate | date: "yyyy'-'MM'-'dd" }}</p>
+                  </div>
+                </div>
 
 
+                <h6 class="mb-0">Comments</h6>
+                @if (commentArrayLength > 0) {
+                <div class="vertical-stepper">
+                  @for (comment of taskById.comments; track comment.id) {
+                  <div class="step">
+                    <div class="step-content">
+                      {{ comment.taskComment }}
+                    </div>
+                  </div>
+                  }
+                </div>
+                } @else {
+                <div class="vertical-stepper">
+                  <div class="step">
+                    <div class="step-content text-center">No Comments to show</div>
+                  </div>
+                </div>
+                }
 
-                              <div class="vertical-stepper">
-                                <div class="step">
-                                  <div class="step-dot"></div>
-                                  <div class="step-line"></div>
-                                  <div class="step-content">
+                <!-- <div class="vertical-stepper">
+                                <div class="step"> -->
+                <!-- <div class="step-dot"></div>
+                                  <div class="step-line"></div> -->
+                <!-- <div class="step-content">
                                     First step content
                                   </div>
-                                </div>
-                                <div class="step">
-                                  <div class="step-dot"></div>
-                                  <div class="step-line"></div>
-                                  <div class="step-content">
+                                </div> -->
+                <!-- <div class="step"> -->
+                <!-- <div class="step-dot"></div>
+                                  <div class="step-line"></div> -->
+                <!-- <div class="step-content">
                                     Second step content
                                   </div>
-                                </div>
-                                <div class="step">
-                                  <div class="step-dot"></div>
-                                  <div class="step-content">
+                                </div> -->
+                <!-- <div class="step"> -->
+                <!-- <div class="step-dot"></div> -->
+                <!-- <div class="step-content">
                                     Final step content
                                   </div>
-                                </div>
-                              </div>
+                                </div> -->
+                <!-- </div> -->
 
 
-                              
-                            </div>
-                            <!-- <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
 
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-    <!-- </div> -->
+
+      </div>
+    </div>
+  </div>
 </div>
