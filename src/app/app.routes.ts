@@ -5,9 +5,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './auth/login/login.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskFormComponent } from './components/task-list/task-form/task-form.component';
+import { AuthGuard } from './core/auth.guard';
 
 export const routes: Routes = [
-    {path: 'login', component: LoginComponent},
+    {
+      path: 'login',
+      component: LoginComponent
+    },
     {
       path: '',
       component: MainComponent,
@@ -37,7 +41,8 @@ export const routes: Routes = [
           redirectTo: 'dashboard',
           pathMatch: 'full'
         }
-      ]
+      ],
+      canActivate: [AuthGuard]
     },
     {
       path: '**',

@@ -57,27 +57,11 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="taskStatus" class="form-label">Task Status</label>
-                                <!-- @if (isUpdate == false) { -->
-                                    <select class="form-select" id="taskStatus" formControlName="taskStatus">
-                                        <option value="OPENED" selected>OPENED</option>
-                                        <option value="IN PROGRESS">IN PROGRESS</option>
-                                        <option value="COMPLETED">COMPLETED</option>
-                                    </select>
-                                <!-- } @else {
-                                    <select class="form-select" id="taskStatus" formControlName="taskStatus" [disabled]="false">
-                                        <option value="OPENED">OPENED</option>
-                                        <option value="IN PROGRESS">IN PROGRESS</option>
-                                        <option value="COMPLETED">COMPLETED</option>
-                                    </select>
-                                } -->
-                                
-                                <!-- @if (taskForm.get('taskAssignee')?.invalid && (taskForm.get('taskAssignee')?.touched || taskForm.get('taskAssignee')?.dirty)) {
-                                    <div class="text-danger">
-                                        @if (taskForm.get('taskAssignee')?.errors?.['required']) {
-                                            <small>Task Assignee is required.</small>
-                                        }
-                                    </div>
-                                } -->
+                                <select class="form-select" id="taskStatus" formControlName="taskStatus">
+                                    <option value="OPENED" selected>OPENED</option>
+                                    <option value="IN PROGRESS">IN PROGRESS</option>
+                                    <option value="COMPLETED">COMPLETED</option>
+                                </select>
                             </div>
                         </div>
                             <div class="mb-3">
