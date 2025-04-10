@@ -282,6 +282,14 @@
     } */
   }
 
+  .step-content hr {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .step-content small {
+    font-size: 11px;
+  }
 
 
 

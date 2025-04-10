@@ -42,7 +42,7 @@ export const routes: Routes = [
           pathMatch: 'full'
         }
       ],
-      canActivate: [AuthGuard]
+      // canActivate: [AuthGuard]
     },
     {
       path: '**',

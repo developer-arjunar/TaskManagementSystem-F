@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-task-list',
@@ -21,15 +22,19 @@ export class TaskListComponent implements OnInit {
   public taskAssignee: any = {};
   public commentArrayLength: any; 
   public usersList: Array<any> = [];
+  public currentUserData: any = {};
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) {}
 
   ngOnInit(): void {
+    this.currentUserData = this.storage.getItem<{}>('loggedInUser');
+
     this.initiateForm();
     this.loadTaskAssigneeDropDown();
     this.loadTasksTable();
@@ -53,14 +58,26 @@ export class TaskListComponent implements OnInit {
   }
 
   loadTasksTable(): void {
-    this.taskService.getAllTasks().subscribe(
-      (res: any[]) => {
-        this.tasksList = res;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    if (this.currentUserData.role.name === 'ADMIN') {
+      this.taskService.getAllTasks().subscribe(
+        (res: any[]) => {
+          this.tasksList = res;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    } else if(this.currentUserData.role.name === 'USER') {
+      this.taskService.getTaskByAssigneeId(this.currentUserData.id).subscribe(
+        (res: any[]) => {
+          this.tasksList = res;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    }
+    
   }
 
   loadTasksTableOnChangeAssignee(id: any): void {

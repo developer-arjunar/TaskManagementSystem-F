@@ -7,7 +7,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
                     <!-- <div class="form-group"> -->
                         <label for="username">Username</label>
 
@@ -16,8 +16,7 @@
                             <!-- <div class="input-group"> -->
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             <!-- </div> -->
-                            <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username"
-                                placeholder="Enter username" required>
+                            <input type="text" class="form-control" id="username" formControlName="loginUsername" name="username" placeholder="Enter username">
                         </div>
 
 
@@ -31,8 +30,7 @@
                             <!-- <div class="input-group-prepend"> -->
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             <!-- </div> -->
-                            <input type="password" class="form-control" id="password" [(ngModel)]="password"
-                                name="password" placeholder="Enter password" required>
+                            <input type="password" class="form-control" id="password" formControlName="loginPassword" name="password" placeholder="Enter password" required>
                         </div>
 
                     <!-- </div> -->
@@ -47,13 +45,6 @@
                             <i class="fas fa-sign-in-alt"></i> Sign In
                         </button>
                     </div>
-                    
-
-                    @if (errorMessage) {
-                        <div class="alert alert-danger mt-3">
-                            {{ errorMessage }}
-                        </div>
-                    }
 
 
                     <!-- <div *ngIf="errorMessage" class="alert alert-danger mt-3">

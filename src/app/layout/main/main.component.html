@@ -26,18 +26,23 @@
                         <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li [class.active]="false">
-                    <a [routerLink]="'/all-tasks'" routerLinkActive="active">
-                        <i class="fas fa-tasks"></i>
-                        <span class="nav-text">All Tasks</span>
-                    </a>
-                </li>
-                <li [class.active]="false">
-                    <a [routerLink]="'/my-tasks'" routerLinkActive="active">
-                        <i class="fas fa-tasks"></i>
-                        <span class="nav-text">My Tasks</span>
-                    </a>
-                </li>
+                @if (currentUserData.role.name === 'ADMIN') {
+                    <li [class.active]="false">
+                        <a [routerLink]="'/all-tasks'" routerLinkActive="active">
+                            <i class="fas fa-tasks"></i>
+                            <span class="nav-text">All Tasks</span>
+                        </a>
+                    </li>
+                } @else if (currentUserData.role.name === 'USER') {
+                    <li [class.active]="false">
+                        <a [routerLink]="'/my-tasks'" routerLinkActive="active">
+                            <i class="fas fa-tasks"></i>
+                            <span class="nav-text">My Tasks</span>
+                        </a>
+                    </li>
+                }
+                
+                
                 <li [class.active]="false">
                     <a [routerLink]="'/notifications'" routerLinkActive="active">
                         <i class="fas fa-bell"></i>
