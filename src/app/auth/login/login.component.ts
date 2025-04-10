@@ -15,6 +15,10 @@ import { StorageService } from '../../services/storage.service';
 export class LoginComponent implements OnInit {
   loginForm! : FormGroup;
 
+  username = '';
+  password = '';
+  errorMessage = '';
+
   public loggedInUser: any = {};
 
   constructor(
@@ -25,6 +29,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.storage.clear();
     this.initiateLoginForm();
   }
 
@@ -35,57 +40,62 @@ export class LoginComponent implements OnInit {
       });
     }
 
-  login() {
-    let userAuthenticationData = {
-      username: this.loginForm.value.loginUsername,
-      password: this.loginForm.value.loginPassword
+    onSubmit() {
+      if (this.authService.login(this.loginForm.value.loginUsername, this.loginForm.value.loginPassword)) {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.errorMessage = 'Invalid username or password';
+      }
     }
 
-    this.authService.authenticateUser(userAuthenticationData).subscribe(
-              (res: any) => {
-                // this.loggedInUser = res.body;
-                // console.log(this.loggedInUser);
-                // console.log(res.body);
-                
-                this.storage.setItem('loggedInUser', res.body);
+  // login() {
+  //   let userAuthenticationData = {
+  //     username: this.loginForm.value.loginUsername,
+  //     password: this.loginForm.value.loginPassword
+  //   }
 
-                this.router.navigate(['/dashboard']);
+  //   this.authService.authenticateUser(userAuthenticationData).subscribe(
+  //             (res: any) => {
+                
+  //               this.storage.setItem('loggedInUser', res.body);
+
+  //               this.router.navigate(['/dashboard']);
                 
                 
 
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                  }
-                });
-                Toast.fire({
-                  icon: "success",
-                  title: "Signed in successfully"
-                });
-              },
-              (error) => {
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                  }
-                });
-                Toast.fire({
-                  icon: "error",
-                  title: "Invalid Username or Password."
-                });
-              }
-            );
-  }
+  //               const Toast = Swal.mixin({
+  //                 toast: true,
+  //                 position: "top-end",
+  //                 showConfirmButton: false,
+  //                 timer: 3000,
+  //                 timerProgressBar: true,
+  //                 didOpen: (toast) => {
+  //                   toast.onmouseenter = Swal.stopTimer;
+  //                   toast.onmouseleave = Swal.resumeTimer;
+  //                 }
+  //               });
+  //               Toast.fire({
+  //                 icon: "success",
+  //                 title: "Signed in successfully"
+  //               });
+  //             },
+  //             (error) => {
+  //               const Toast = Swal.mixin({
+  //                 toast: true,
+  //                 position: "top-end",
+  //                 showConfirmButton: false,
+  //                 timer: 3000,
+  //                 timerProgressBar: true,
+  //                 didOpen: (toast) => {
+  //                   toast.onmouseenter = Swal.stopTimer;
+  //                   toast.onmouseleave = Swal.resumeTimer;
+  //                 }
+  //               });
+  //               Toast.fire({
+  //                 icon: "error",
+  //                 title: "Invalid Username or Password."
+  //               });
+  //             }
+  //           );
+  // }
 }

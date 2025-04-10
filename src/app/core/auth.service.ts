@@ -32,29 +32,11 @@ export class AuthService {
     return false;
   }
 
-  authenticateUser(userAuthenticationData: any): Observable<any> {
-    // if (username === 'admin' && password === 'admin123') {
-    //   this.loggedIn.next(true);
-    //   localStorage.setItem('isLoggedIn', 'true');
-    //   return true;
-    // }
-    // this.httpClient.post(this.API_URL + 'api/Users/AuthenticateUser', userAuthenticationData, {observe: 'response'})
-    //   .subscribe({
-    //     next: (response: HttpResponse<{}>) => {
-    //       this.loggedIn.next(true);
-    //       this.storage.setItem('isLoggedIn', 'true');
-    //     }
-    //   }
-    // );
-
-    return this.httpClient.post(this.API_URL + 'api/Users/AuthenticateUser', userAuthenticationData, {
-      observe: 'response'
-    });
-    
-    
-
-    // return false;
-  }
+  // authenticateUser(userAuthenticationData: any): Observable<any> {
+  //   return this.httpClient.post(this.API_URL + 'api/Users/AuthenticateUser', userAuthenticationData, {
+  //     observe: 'response'
+  //   });
+  // }
 
   logout() {
     this.loggedIn.next(false);
