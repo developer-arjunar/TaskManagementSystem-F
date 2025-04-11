@@ -34,4 +34,8 @@ export class TaskService {
   deleteTask(id: any): Observable<any> {
     return this.httpClient.delete(this.API_URL + 'api/Tasks/' + id);
   }
+
+  addNewComment(taskCommentData: any): Observable<any> {
+    return this.httpClient.post(this.API_URL + 'api/Comments', taskCommentData);
+  }
 }

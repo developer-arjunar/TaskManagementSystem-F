@@ -23,24 +23,18 @@ export class AuthService {
     private storage: StorageService
   ) { }
 
-  login(username: string, password: string): boolean {
-    if (username === 'admin' && password === 'admin123') {
+  login(statusCode: any): boolean {
+    if (statusCode == 200) {
       this.loggedIn.next(true);
-      localStorage.setItem('isLoggedIn', 'true');
+      this.storage.setItem('isLoggedIn', 'true');
       return true;
     }
     return false;
   }
 
-  // authenticateUser(userAuthenticationData: any): Observable<any> {
-  //   return this.httpClient.post(this.API_URL + 'api/Users/AuthenticateUser', userAuthenticationData, {
-  //     observe: 'response'
-  //   });
-  // }
-
   logout() {
     this.loggedIn.next(false);
-    localStorage.removeItem('isLoggedIn');
+    this.storage.removeItem('isLoggedIn');
     this.router.navigate(['/login']);
   }
 }

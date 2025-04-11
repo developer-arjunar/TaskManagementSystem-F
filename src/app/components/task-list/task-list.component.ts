@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../services/user.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { StorageService } from '../../services/storage.service';
@@ -16,6 +16,7 @@ import { StorageService } from '../../services/storage.service';
 })
 export class TaskListComponent implements OnInit {
   taskAssigneeForm! : FormGroup;
+  commentForm! : FormGroup;
 
   public tasksList: Array<any> = [];
   public taskById: any = {};
@@ -23,6 +24,7 @@ export class TaskListComponent implements OnInit {
   public commentArrayLength: any; 
   public usersList: Array<any> = [];
   public currentUserData: any = {};
+  public showCommentTextArea: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,10 +43,16 @@ export class TaskListComponent implements OnInit {
   }
 
   initiateForm() {
-      this.taskAssigneeForm = this.fb.group({
-        taskAssignee: ['']
-      });
-    }
+    this.taskAssigneeForm = this.fb.group({
+      taskAssignee: ['']
+    });
+  }
+
+  initiateCommentForm() {
+    this.commentForm = this.fb.group({
+      taskComment: ['', Validators.required]
+    });
+  }
 
   loadTaskAssigneeDropDown(): void {
     this.userService.getAllUsers().subscribe(
@@ -146,6 +154,35 @@ export class TaskListComponent implements OnInit {
         this.loadTasksTable();
       }
     });
+  }
+
+  postComment(taskId: any) {
+    let taskCommentData = {
+      taskComment: this.commentForm.value.taskComment,
+      createdBy: this.currentUserData.username,
+      taskId: taskId
+    }
+
+    console.log(taskCommentData);
+    
+
+    this.taskService.addNewComment(taskCommentData).subscribe(
+              (res: any[]) => {
+                this.toggleComponents();
+                this.getTaskView(taskId);
+              },
+              (error) => {
+                
+              }
+            );
+  }
+
+  toggleComponents() {
+    this.showCommentTextArea = !this.showCommentTextArea;
+
+    if(this.showCommentTextArea == true) {
+      this.initiateCommentForm();
+    }
   }
 
   navigateToTaskForm() {
