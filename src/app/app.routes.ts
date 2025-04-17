@@ -8,49 +8,49 @@ import { TaskFormComponent } from './components/task-list/task-form/task-form.co
 import { AuthGuard } from './core/auth.guard';
 
 export const routes: Routes = [
-    {
-      path: 'login',
-      component: LoginComponent
-    },
-    {
-      path: '',
-      component: MainComponent,
-      children: [
-        {
-          path: 'dashboard',
-          component: DashboardComponent
-        },
-        {
-          path: 'all-tasks',
-          component: TaskListComponent,
-        },
-        {
-          path: 'my-tasks',
-          component: TaskListComponent,
-        },
-        {
-          path: 'tasks/create-task',
-          component: TaskFormComponent
-        },
-        {
-          path: 'tasks/update-task/:id',
-          component: TaskFormComponent
-        },
-        {
-          path: '',
-          redirectTo: 'dashboard',
-          pathMatch: 'full'
-        }
-      ],
-      // canActivate: [AuthGuard]
-    },
-    {
-      path: '**',
-      redirectTo: 'dashboard'
-    }
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '',
+    component: MainComponent,
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'all-tasks',
+        component: TaskListComponent,
+      },
+      {
+        path: 'my-tasks',
+        component: TaskListComponent,
+      },
+      {
+        path: 'tasks/create-task',
+        component: TaskFormComponent
+      },
+      {
+        path: 'tasks/update-task/:id',
+        component: TaskFormComponent
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
+    ],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'dashboard'
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-  }) export class AppRoutingModule { }
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+}) export class AppRoutingModule { }

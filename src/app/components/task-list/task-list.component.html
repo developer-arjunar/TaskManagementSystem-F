@@ -5,9 +5,9 @@
 
 
   <div class="col-md-12">
-    <!-- <div class="card stat-card">
-      <div class="card-body"> -->
-        <!-- @if (currentUserData.role.name === 'ADMIN') {
+    <div class="card stat-card">
+      <div class="card-body">
+        @if (currentUserData.role.name === 'ADMIN') {
           <div class="d-flex justify-content-between">
             <div class="col-auto">
               <div class="row g-3 align-items-center">
@@ -82,9 +82,12 @@
 
         
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onModalClose()"></button>
+              </div>
               <div class="modal-body">
                 <h3 class="text-center">Task Details</h3>
 
@@ -166,29 +169,67 @@
               </div>
             </div>
           </div>
-        </div> -->
-      <!-- </div>
-    </div> -->
+        </div>
+      </div>
+    </div>
 
 
 
-    <div class="custom-nav">
+    <!-- <div class="custom-nav">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+          <button class="nav-link active" id="nav-all-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-all-tasks"
+            type="button" role="tab" aria-controls="nav-all-tasks" aria-selected="true">
+            All Tasks
+          </button>
+          <button class="nav-link" id="nav-pending-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-pending-tasks"
+            type="button" role="tab" aria-controls="nav-pending-tasks" aria-selected="false">
+            Opened Tasks
+          </button>
+          <button class="nav-link" id="nav-in-progress-tasks-tab" data-bs-toggle="tab"
+            data-bs-target="#nav-in-progress-tasks" type="button" role="tab" aria-controls="nav-in-progress-tasks"
+            aria-selected="false">
+            In Progress Tasks
+          </button>
+          <button class="nav-link" id="nav-completed-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-completed-tasks"
+            type="button" role="tab" aria-controls="nav-completed-tasks" aria-selected="false">
+            Completed Tasks
+          </button>
+          <button class="nav-link" id="nav-overdue-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-tasks"
+            type="button" role="tab" aria-controls="nav-overdue-tasks" aria-selected="false">
+            Overdue Tasks
+          </button>
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">...</div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
-      </div>
-    </div>
+        <div class="tab-pane fade show active" id="nav-all-tasks" role="tabpanel" aria-labelledby="nav-all-tasks-tab"
+          tabindex="0">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-0">
     
+            <div class="col-md-4">
+              <div class="card stat-card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="stat-info">
+                      <h4 class="card-title">All Tasks</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-pending-tasks" role="tabpanel" aria-labelledby="nav-pending-tasks-tab"
+          tabindex="0">...</div>
+        <div class="tab-pane fade" id="nav-in-progress-tasks" role="tabpanel" aria-labelledby="nav-in-progress-tasks-tab"
+          tabindex="0">...</div>
+        <div class="tab-pane fade" id="nav-completed-tasks" role="tabpanel" aria-labelledby="nav-completed-tasks-tab"
+          tabindex="0">...</div>
+        <div class="tab-pane fade" id="nav-overdue-tasks" role="tabpanel" aria-labelledby="nav-overdue-tasks-tab"
+          tabindex="0">...</div>
+      </div>
+    </div> -->
   </div>
 </div>
 

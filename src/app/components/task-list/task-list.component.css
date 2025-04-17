@@ -298,7 +298,6 @@
   } */
 
 .custom-nav nav .nav-tabs {
-    color: #007bff;
     background-color: transparent;
     border-top-color: transparent;
     border-right-color: transparent;
@@ -308,20 +307,105 @@
 }
 
 .custom-nav nav .nav-tabs .nav-link {
-    color: #5c5c5c;
+    color: rgba(var(--bs-secondary-rgb), 0.7);
     /* background-color: transparent; */
     border-top-color: transparent;
     border-right-color: transparent;
     border-bottom-color: transparent;
     border-left-color: transparent;
+    font-weight: bold;
 }
 
-.custom-nav nav .nav-tabs .nav-link.active {
-    color: #007bff;
+/* span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-secondary-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-all-tasks-tab.nav-link:hover {
+    color: rgba(var(--bs-primary-rgb), 0.7);
+}
+
+/* .custom-nav nav .nav-tabs #nav-all-tasks-tab.nav-link:hover span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-primary-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-pending-tasks-tab.nav-link:hover {
+    color: rgba(var(--bs-info-rgb), 0.7);
+}
+
+/* .custom-nav nav .nav-tabs #nav-pending-tasks-tab.nav-link:hover span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-info-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-in-progress-tasks-tab.nav-link:hover {
+    color: rgba(var(--bs-warning-rgb), 0.7);
+}
+
+/* .custom-nav nav .nav-tabs #nav-in-progress-tasks-tab.nav-link:hover span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-warning-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-completed-tasks-tab.nav-link:hover {
+    color: rgba(var(--bs-success-rgb), 0.7);
+}
+
+/* .custom-nav nav .nav-tabs #nav-completed-tasks-tab.nav-link:hover span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-success-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-overdue-tasks-tab.nav-link:hover {
+    color: rgba(var(--bs-danger-rgb), 0.7);
+}
+
+/* .custom-nav nav .nav-tabs #nav-overdue-tasks-tab.nav-link:hover span.badge.custom-bg-color {
+    background-color: rgba(var(--bs-danger-rgb), 0.7);
+} */
+
+.custom-nav nav .nav-tabs #nav-all-tasks-tab.nav-link.active {
+    color: #0d6efd;
     background-color: transparent;
     border-top-color: transparent;
     border-right-color: transparent;
-    border-bottom-color: #007bff;
+    border-bottom-color: #0d6efd;
+    border-left-color: transparent;
+    border-bottom-width: 3px;
+}
+
+.custom-nav nav .nav-tabs #nav-pending-tasks-tab.nav-link.active {
+    color: #0dcaf0;
+    background-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #0dcaf0;
+    border-left-color: transparent;
+    border-bottom-width: 3px;
+}
+
+.custom-nav nav .nav-tabs #nav-in-progress-tasks-tab.nav-link.active {
+    color: #ffc107;
+    background-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #ffc107;
+    border-left-color: transparent;
+    border-bottom-width: 3px;
+}
+
+.custom-nav nav .nav-tabs #nav-completed-tasks-tab.nav-link.active {
+    color: #198754;
+    background-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #198754;
+    border-left-color: transparent;
+    border-bottom-width: 3px;
+}
+
+.custom-nav nav .nav-tabs #nav-overdue-tasks-tab.nav-link.active {
+    color: #dc3545;
+    background-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #dc3545;
     border-left-color: transparent;
     border-bottom-width: 3px;
 }

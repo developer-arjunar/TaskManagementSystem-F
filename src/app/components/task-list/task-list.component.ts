@@ -114,7 +114,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTaskById(id).subscribe(
       (res: any) => {
         console.log(res.comments.length);
-        
+
         this.taskById = res;
         this.taskAssignee = res.assignee;
         this.commentArrayLength = res.comments.length;
@@ -183,6 +183,10 @@ export class TaskListComponent implements OnInit {
     if(this.showCommentTextArea == true) {
       this.initiateCommentForm();
     }
+  }
+
+  onModalClose() {
+    this.showCommentTextArea = false;
   }
 
   navigateToTaskForm() {
