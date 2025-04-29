@@ -196,4 +196,8 @@ export class TaskListComponent implements OnInit {
   navigateToEditForm(id: any) {
     this.router.navigate(['/tasks/update-task', id]);
   }
+
+  navBarClicked(taskStatus: string) {
+    console.log("Task Status : " + taskStatus);
+  }
 }
