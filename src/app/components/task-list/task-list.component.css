@@ -42,10 +42,10 @@
     transition: all 0.3s;
 }
 
-/* .dashboard .stat-card:hover {
+.dashboard .stat-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-} */
+}
 
 .dashboard .stat-card .card-body {
     padding: 20px;
@@ -304,6 +304,7 @@
     border-bottom-color: #b3b3b3;
     border-left-color: transparent;
     border-bottom-width: 1px;
+    margin-bottom: 16px;
 }
 
 .custom-nav nav .nav-tabs .nav-link {

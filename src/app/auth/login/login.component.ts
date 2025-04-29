@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.value.loginPassword
       }
 
-      this.httpClient.post('https://taskmgtsys.onrender.com/api/Users/AuthenticateUser', userAuthenticationData, {
+      this.httpClient.post('https://localhost:7137/api/Users/AuthenticateUser', userAuthenticationData, {
         observe: 'response'
       }).subscribe({
         next: (response) => {
