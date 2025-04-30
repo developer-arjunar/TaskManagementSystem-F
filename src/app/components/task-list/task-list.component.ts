@@ -25,6 +25,8 @@ export class TaskListComponent implements OnInit {
   public usersList: Array<any> = [];
   public currentUserData: any = {};
   public showCommentTextArea: boolean = false;
+  public selectedTaskAssigneeId: any= 'ALL';
+  public selectedTaskStatus: any = 'ALL';
 
   constructor(
     private fb: FormBuilder,
@@ -89,7 +91,9 @@ export class TaskListComponent implements OnInit {
   }
 
   loadTasksTableOnChangeAssignee(id: any): void {
-    if (id == 'all') {
+    this.selectedTaskAssigneeId = id;
+
+    if (this.selectedTaskAssigneeId === 'ALL' && this.selectedTaskStatus === 'ALL') {
       this.taskService.getAllTasks().subscribe(
         (res: any[]) => {
           this.tasksList = res;
@@ -98,8 +102,26 @@ export class TaskListComponent implements OnInit {
           console.log(error);
         }
       );
+    } else if (this.selectedTaskAssigneeId === 'ALL') {
+      this.taskService.getTaskByStatus(this.selectedTaskStatus).subscribe(
+        (res: any[]) => {
+          this.tasksList = res;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    } else if (this.selectedTaskStatus === 'ALL') {
+      this.taskService.getTaskByAssigneeId(this.selectedTaskAssigneeId).subscribe(
+        (res: any[]) => {
+          this.tasksList = res;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
     } else {
-      this.taskService.getTaskByAssigneeId(id).subscribe(
+      this.taskService.getTaskByAssigneeIdAndStatus(this.selectedTaskAssigneeId, this.selectedTaskStatus).subscribe(
         (res: any[]) => {
           this.tasksList = res;
         },
@@ -197,7 +219,67 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(['/tasks/update-task', id]);
   }
 
-  navBarClicked(taskStatus: string) {
-    console.log("Task Status : " + taskStatus);
+  loadTasksByNavbarChange(taskStatus: string) {
+    this.selectedTaskStatus = taskStatus;
+
+    if (this.currentUserData.role.name === 'ADMIN') {
+      if (this.selectedTaskAssigneeId === 'ALL' && this.selectedTaskStatus === 'ALL') {
+        this.taskService.getAllTasks().subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      } else if (this.selectedTaskAssigneeId === 'ALL') {
+        this.taskService.getTaskByStatus(this.selectedTaskStatus).subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      } else if (this.selectedTaskStatus === 'ALL') {
+        this.taskService.getTaskByAssigneeId(this.selectedTaskAssigneeId).subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.taskService.getTaskByAssigneeIdAndStatus(this.selectedTaskAssigneeId, this.selectedTaskStatus).subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      }
+    } else if (this.currentUserData.role.name === 'USER') {
+      if (taskStatus === 'ALL') {
+        this.taskService.getTaskByAssigneeId(this.currentUserData.id).subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.taskService.getTaskByAssigneeIdAndStatus(this.currentUserData.id, taskStatus).subscribe(
+          (res: any[]) => {
+            this.tasksList = res;
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        );
+      }
+    }
   }
 }

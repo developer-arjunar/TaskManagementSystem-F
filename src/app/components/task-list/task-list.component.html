@@ -191,7 +191,7 @@
                   <select id="taskAssignee" class="form-select form-select-sm" formControlName="taskAssignee"
                     (ngModelChange)="loadTasksTableOnChangeAssignee($event)">
                     <option value="" disabled selected>Select Task Assignee</option>
-                    <option value="all">All</option>
+                    <option value="ALL">All</option>
                     @for (assignee of usersList; track assignee.id) {
                     <option value='{{ assignee.id }}'>{{ assignee.name }}</option>
                     }
@@ -213,20 +213,20 @@
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <button class="nav-link active" id="nav-all-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-all-tasks"
-            type="button" role="tab" aria-controls="nav-all-tasks" aria-selected="true" (click)="navBarClicked('All')">
+            type="button" role="tab" aria-controls="nav-all-tasks" aria-selected="true" (click)="loadTasksByNavbarChange('ALL')">
             All Tasks
           </button>
           <button class="nav-link" id="nav-pending-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-pending-tasks"
-            type="button" role="tab" aria-controls="nav-pending-tasks" aria-selected="false">
+            type="button" role="tab" aria-controls="nav-pending-tasks" aria-selected="false" (click)="loadTasksByNavbarChange('OPENED')">
             Opened Tasks
           </button>
           <button class="nav-link" id="nav-in-progress-tasks-tab" data-bs-toggle="tab"
             data-bs-target="#nav-in-progress-tasks" type="button" role="tab" aria-controls="nav-in-progress-tasks"
-            aria-selected="false">
+            aria-selected="false" (click)="loadTasksByNavbarChange('IN PROGRESS')">
             In Progress Tasks
           </button>
           <button class="nav-link" id="nav-completed-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-completed-tasks"
-            type="button" role="tab" aria-controls="nav-completed-tasks" aria-selected="false">
+            type="button" role="tab" aria-controls="nav-completed-tasks" aria-selected="false" (click)="loadTasksByNavbarChange('COMPLETED')">
             Completed Tasks
           </button>
           <button class="nav-link" id="nav-overdue-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-tasks"
@@ -244,14 +244,60 @@
               <div class="card stat-card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="stat-info">
-                      <h4 class="card-title">All Tasks</h4>
+                    <!-- <div class="stat-info">
+                      <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
                     <div class="stat-icon bg-primary">
                       <i class="fas fa-tasks"></i>
+                    </div> -->
+                    <div>
+                      <h6><span class="badge text-bg-secondary rounded-pill">#{{ i + 1 }}</span></h6>
                     </div>
+                    <div>
+                      @if (task.status == 'OPENED') {
+                        <h6><span class="badge rounded-pill text-bg-info">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'IN PROGRESS') {
+                        <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'COMPLETED') {
+                        <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      }
+                    </div>
+                  </div>
+                  <!-- <div class="d-flex flex-row mb-3"> -->
+                    <!-- <div>
+                      <i class="fas fa-tasks"></i>
+                    </div> -->
+                  <!-- </div> -->
+                  <h5>{{ task.name }}</h5>
+                  <!-- <div class="d-flex justify-content-between"> -->
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #0D6EFD;"></i>
+                      <span style="margin-left: 15px; color: #0D6EFD;">Assingned Date : {{ task.createdDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #DC4C64;"></i>
+                      <span style="margin-left: 15px; color: #DC4C64;">Due Date : {{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                  <!-- </div> -->
+                  <div>
+                    <i class="fas fa-comments" style="color: #9FA6B2;"></i>
+                    <span style="margin-left: 10px; color: #9FA6B2;">{{ task.comments.length }}</span>
+                  </div>
+                  <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="getTaskView(task.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                    <i class="fas fa-pen-to-square"></i>
+                  </button>
+                  @if (currentUserData.role.name === 'ADMIN') {
+                    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                      <i class="fas fa-trash-can"></i>
+                    </button>
+                  }
                   </div>
                 </div>
               </div>
@@ -268,7 +314,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="stat-info">
-                      <h4 class="card-title">All Tasks</h4>
+                      <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
@@ -291,7 +337,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="stat-info">
-                      <h4 class="card-title">All Tasks</h4>
+                      <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
@@ -314,7 +360,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="stat-info">
-                      <h4 class="card-title">All Tasks</h4>
+                      <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
@@ -330,7 +376,7 @@
         </div>
         <div class="tab-pane fade" id="nav-overdue-tasks" role="tabpanel" aria-labelledby="nav-overdue-tasks-tab"
           tabindex="0">
-          <div class="row">
+          <!-- <div class="row">
             @for (task of tasksList; track task.id; let i = $index) {
             <div class="col-md-6 col-xl-4">
               <div class="card stat-card">
@@ -349,7 +395,7 @@
               </div>
             </div>
             }
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

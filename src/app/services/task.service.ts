@@ -27,6 +27,14 @@ export class TaskService {
     return this.httpClient.get(this.API_URL + 'api/Tasks/byAssigneeId/' + assigneeId);
   }
 
+  getTaskByStatus(status: any): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks/byStatus/' + status);
+  }
+
+  getTaskByAssigneeIdAndStatus(assigneeId: any, status: any): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks/byAssigneeIdAndStatus/' + assigneeId + '/' + status);
+  }
+
   updateTask(id: any, taskUpdateData: any): Observable<any> {
     return this.httpClient.put(this.API_URL + 'api/Tasks/' + id, taskUpdateData);
   }
