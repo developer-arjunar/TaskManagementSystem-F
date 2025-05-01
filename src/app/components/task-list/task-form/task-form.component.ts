@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { UserService } from '../../../services/user.service';
 import { TaskService } from '../../../services/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-task-form',
@@ -21,6 +22,7 @@ export class TaskFormComponent implements OnInit {
   public isUpdate: boolean = false;
   public taskById: any = {};
   public taskId: any;
+  public currentUserData: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -28,10 +30,13 @@ export class TaskFormComponent implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private route: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private storage: StorageService
   ) {}
 
   ngOnInit(): void {
+    this.currentUserData = this.storage.getItem<{}>('loggedInUser');
+
     this.route.paramMap.subscribe(params => {
       this.taskId = params.get('id');
       
@@ -75,7 +80,9 @@ export class TaskFormComponent implements OnInit {
           description: this.taskForm.value.taskDescription,
           dueDate: this.taskForm.value.taskDueDate,
           status: this.taskForm.get('taskStatus')?.value,
-          assigneeId: this.taskForm.value.taskAssignee
+          assigneeId: this.taskForm.value.taskAssignee,
+          createdBy: this.currentUserData.username,
+          updatedBy: this.currentUserData.username
         }
 
         console.log(taskData);
@@ -101,13 +108,16 @@ export class TaskFormComponent implements OnInit {
           }
         );
       } else {
+        this.taskForm.enable();
+
         let taskData = {
           name: this.taskForm.value.taskName,
           description: this.taskForm.value.taskDescription,
           dueDate: this.taskForm.value.taskDueDate,
           updatedDate: new Date(),
           status: this.taskForm.value.taskStatus,
-          assigneeId: this.taskForm.value.taskAssignee
+          assigneeId: this.taskForm.value.taskAssignee,
+          updatedBy: this.currentUserData.username
         }
 
         this.taskService.updateTask(this.taskId, taskData).subscribe(
@@ -151,6 +161,13 @@ export class TaskFormComponent implements OnInit {
           taskStatus: res.status,
           taskDueDate: this.datePipe.transform(res.dueDate, 'yyyy-MM-dd')
         })
+
+        if (this.currentUserData.role.name === 'USER') {
+          this.taskForm.get('taskName')?.disable();
+          this.taskForm.get('taskDescription')?.disable();
+          this.taskForm.get('taskAssignee')?.disable();
+          this.taskForm.get('taskDueDate')?.disable();
+        }
       },
       (error: any) => {
         console.log(error);

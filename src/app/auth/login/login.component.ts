@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   password = '';
   errorMessage = '';
 
-  public loggedInUser: any = {};
+  public user: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -61,11 +61,31 @@ export class LoginComponent implements OnInit {
         observe: 'response'
       }).subscribe({
         next: (response) => {
-          if(this.authService.login(response.status)) {
-            this.storage.setItem('loggedInUser', response.body);
+          this.user = response.body;
 
-            this.router.navigate(['/dashboard']);
-
+          if (this.user.status == 1) {
+            if (this.authService.login(response.status)) {
+              this.storage.setItem('loggedInUser', response.body);
+  
+              this.router.navigate(['/dashboard']);
+  
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
+            }
+          } else {
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
@@ -78,9 +98,11 @@ export class LoginComponent implements OnInit {
               }
             });
             Toast.fire({
-              icon: "success",
-              title: "Signed in successfully"
+              icon: "error",
+              title: "User inactivated. Please contact the ADMIN."
             });
+
+            this.loginForm.reset();
           }
         },
         error: (error) => {

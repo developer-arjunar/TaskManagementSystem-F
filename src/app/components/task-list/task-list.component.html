@@ -399,6 +399,98 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+          data-bs-backdrop="static" data-bs-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="onModalClose()"></button>
+              </div>
+              <div class="modal-body">
+                <h3 class="text-center">Task Details</h3>
+  
+                <p class="fs-6" hidden>{{ taskById.id }}</p>
+  
+                <h6 class="mb-0">Task Name</h6>
+                <p class="fs-6">{{ taskById.name }}</p>
+  
+                <h6 class="mb-0">Task Description</h6>
+                <p class="fs-6">{{ taskById.description }}</p>
+  
+                <h6 class="mb-0">Task Assignee</h6>
+                <p class="fs-6">{{ taskAssignee.name }}</p>
+  
+                <div class="d-flex justify-content-between">
+                  <div class="col-md-6">
+                    <h6 class="mb-0">Task Status</h6>
+                    @if (taskById.status == 'OPENED') {
+                    <span class="badge rounded-pill text-bg-info">{{ taskById.status }}</span>
+                    } @else if (taskById.status == 'IN PROGRESS') {
+                    <span class="badge rounded-pill text-bg-warning">{{ taskById.status }}</span>
+                    } @else if (taskById.status == 'COMPLETED') {
+                    <span class="badge rounded-pill text-bg-success">{{ taskById.status }}</span>
+                    }
+                  </div>
+  
+                  <div class="col-md-6">
+                    <h6 class="mb-0">Task Due Date</h6>
+                    <p class="fs-6">{{ taskById.dueDate | date: "yyyy'-'MM'-'dd" }}</p>
+                  </div>
+                </div>
+  
+  
+                <h6 class="mb-0">Comments</h6>
+                @if (commentArrayLength > 0) {
+                <div class="vertical-stepper">
+                  <div class="step">
+                    <div class="step-content">
+                      @for (comment of taskById.comments; track comment.id; let i = $index) {
+                      {{ comment.taskComment }}
+                      <br />
+                      <small>{{ comment.createdDate | date: "yyyy'-'MM'-'dd" }} by {{ comment.createdBy }}</small>
+                      @if (i
+                      < commentArrayLength - 1) { <hr />
+                      }
+                      }
+                    </div>
+                  </div>
+                </div>
+                } @else {
+                <p class="text-center">No Comments to show</p>
+                }
+                @if (showCommentTextArea == true) {
+                <form [formGroup]="commentForm" (ngSubmit)="postComment(taskById.id)">
+                  <div class="form-group">
+                    <textarea class="form-control form-control-sm" rows="3" formControlName="taskComment"
+                      placeholder="Enter a new comment"></textarea>
+                  </div>
+                  @if (commentForm.get('taskComment')?.invalid) {
+                  <div class="text-danger">
+                    @if (commentForm.get('taskComment')?.errors?.['required']) {
+                    <small>Comment is required.</small>
+                    }
+                  </div>
+                  }
+  
+                  <div class="text-center mt-2">
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-success btn-sm">Post Comment</button>
+                    </div>
+                  </div>
+                </form>
+                }
+  
+                @if (showCommentTextArea == false) {
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="toggleComponents()">Add Comment</button>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
 </div>
 
