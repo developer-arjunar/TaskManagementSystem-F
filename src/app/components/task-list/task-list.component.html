@@ -313,14 +313,60 @@
               <div class="card stat-card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="stat-info">
+                    <!-- <div class="stat-info">
                       <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
                     <div class="stat-icon bg-primary">
                       <i class="fas fa-tasks"></i>
+                    </div> -->
+                    <div>
+                      <h6><span class="badge text-bg-secondary rounded-pill">#{{ i + 1 }}</span></h6>
                     </div>
+                    <div>
+                      @if (task.status == 'OPENED') {
+                        <h6><span class="badge rounded-pill text-bg-info">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'IN PROGRESS') {
+                        <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'COMPLETED') {
+                        <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      }
+                    </div>
+                  </div>
+                  <!-- <div class="d-flex flex-row mb-3"> -->
+                    <!-- <div>
+                      <i class="fas fa-tasks"></i>
+                    </div> -->
+                  <!-- </div> -->
+                  <h5>{{ task.name }}</h5>
+                  <!-- <div class="d-flex justify-content-between"> -->
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #0D6EFD;"></i>
+                      <span style="margin-left: 15px; color: #0D6EFD;">Assingned Date : {{ task.createdDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #DC4C64;"></i>
+                      <span style="margin-left: 15px; color: #DC4C64;">Due Date : {{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                  <!-- </div> -->
+                  <div>
+                    <i class="fas fa-comments" style="color: #9FA6B2;"></i>
+                    <span style="margin-left: 10px; color: #9FA6B2;">{{ task.comments.length }}</span>
+                  </div>
+                  <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="getTaskView(task.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                    <i class="fas fa-pen-to-square"></i>
+                  </button>
+                  @if (currentUserData.role.name === 'ADMIN') {
+                    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                      <i class="fas fa-trash-can"></i>
+                    </button>
+                  }
                   </div>
                 </div>
               </div>
@@ -336,14 +382,60 @@
               <div class="card stat-card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="stat-info">
+                    <!-- <div class="stat-info">
                       <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
                     <div class="stat-icon bg-primary">
                       <i class="fas fa-tasks"></i>
+                    </div> -->
+                    <div>
+                      <h6><span class="badge text-bg-secondary rounded-pill">#{{ i + 1 }}</span></h6>
                     </div>
+                    <div>
+                      @if (task.status == 'OPENED') {
+                        <h6><span class="badge rounded-pill text-bg-info">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'IN PROGRESS') {
+                        <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'COMPLETED') {
+                        <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      }
+                    </div>
+                  </div>
+                  <!-- <div class="d-flex flex-row mb-3"> -->
+                    <!-- <div>
+                      <i class="fas fa-tasks"></i>
+                    </div> -->
+                  <!-- </div> -->
+                  <h5>{{ task.name }}</h5>
+                  <!-- <div class="d-flex justify-content-between"> -->
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #0D6EFD;"></i>
+                      <span style="margin-left: 15px; color: #0D6EFD;">Assingned Date : {{ task.createdDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #DC4C64;"></i>
+                      <span style="margin-left: 15px; color: #DC4C64;">Due Date : {{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                  <!-- </div> -->
+                  <div>
+                    <i class="fas fa-comments" style="color: #9FA6B2;"></i>
+                    <span style="margin-left: 10px; color: #9FA6B2;">{{ task.comments.length }}</span>
+                  </div>
+                  <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="getTaskView(task.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                    <i class="fas fa-pen-to-square"></i>
+                  </button>
+                  @if (currentUserData.role.name === 'ADMIN') {
+                    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                      <i class="fas fa-trash-can"></i>
+                    </button>
+                  }
                   </div>
                 </div>
               </div>
@@ -359,14 +451,60 @@
               <div class="card stat-card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="stat-info">
+                    <!-- <div class="stat-info">
                       <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
                     <div class="stat-icon bg-primary">
                       <i class="fas fa-tasks"></i>
+                    </div> -->
+                    <div>
+                      <h6><span class="badge text-bg-secondary rounded-pill">#{{ i + 1 }}</span></h6>
                     </div>
+                    <div>
+                      @if (task.status == 'OPENED') {
+                        <h6><span class="badge rounded-pill text-bg-info">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'IN PROGRESS') {
+                        <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'COMPLETED') {
+                        <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      }
+                    </div>
+                  </div>
+                  <!-- <div class="d-flex flex-row mb-3"> -->
+                    <!-- <div>
+                      <i class="fas fa-tasks"></i>
+                    </div> -->
+                  <!-- </div> -->
+                  <h5>{{ task.name }}</h5>
+                  <!-- <div class="d-flex justify-content-between"> -->
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #0D6EFD;"></i>
+                      <span style="margin-left: 15px; color: #0D6EFD;">Assingned Date : {{ task.createdDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #DC4C64;"></i>
+                      <span style="margin-left: 15px; color: #DC4C64;">Due Date : {{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                  <!-- </div> -->
+                  <div>
+                    <i class="fas fa-comments" style="color: #9FA6B2;"></i>
+                    <span style="margin-left: 10px; color: #9FA6B2;">{{ task.comments.length }}</span>
+                  </div>
+                  <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="getTaskView(task.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                    <i class="fas fa-pen-to-square"></i>
+                  </button>
+                  @if (currentUserData.role.name === 'ADMIN') {
+                    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                      <i class="fas fa-trash-can"></i>
+                    </button>
+                  }
                   </div>
                 </div>
               </div>

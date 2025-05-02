@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskFormComponent } from './components/task-list/task-form/task-form.component';
 import { AuthGuard } from './core/auth.guard';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'tasks/update-task/:id',
         component: TaskFormComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileDetailsComponent
       },
       {
         path: '',
