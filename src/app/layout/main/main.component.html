@@ -41,8 +41,6 @@
                         </a>
                     </li>
                 }
-                
-                
                 <li [class.active]="false">
                     <a [routerLink]="'/notifications'" routerLinkActive="active">
                         <i class="fas fa-bell"></i>
@@ -55,6 +53,14 @@
                         <span class="nav-text">Profile</span>
                     </a>
                 </li>
+                @if (currentUserData.role.name === 'ADMIN') {
+                    <li [class.active]="false">
+                        <a [routerLink]="'/users'" routerLinkActive="active">
+                            <i class="fas fa-users"></i>
+                            <span class="nav-text">Users</span>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a (click)="logout()">
                         <i class="fas fa-sign-out-alt"></i>
