@@ -30,4 +30,16 @@ export class UserService {
   deleteUser(id: any): Observable<any> {
     return this.httpClient.delete(this.API_URL + 'api/Users/' + id);
   }
+
+  updateProfileDetails(id: any, profileDetailsUpdateData: any): Observable<any> {
+    return this.httpClient.put(this.API_URL + 'api/Users/updateProfileDetails/' + id, profileDetailsUpdateData);
+  }
+
+  updateAccountDetails(id: any, accountDetailsUpdateData: any): Observable<any> {
+    return this.httpClient.put(this.API_URL + 'api/Users/updateAccountDetails/' + id, accountDetailsUpdateData);
+  }
+
+  updatePassword(id: any, passwordUpdateData: any): Observable<any> {
+    return this.httpClient.put(this.API_URL + 'api/Users/updatePassword/' + id, passwordUpdateData);
+  }
 }
