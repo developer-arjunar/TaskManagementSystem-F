@@ -46,4 +46,8 @@ export class TaskService {
   addNewComment(taskCommentData: any): Observable<any> {
     return this.httpClient.post(this.API_URL + 'api/Comments', taskCommentData);
   }
+
+  getTaskSummary(): Observable<any> {
+    return this.httpClient.get(this.API_URL + 'api/Tasks/tasksSummary');
+  }
 }
