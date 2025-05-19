@@ -19,7 +19,7 @@
                 <div class="row d-flex justify-content-between">
                   <div class="col-md-6 mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" formControlName="profileName" placeholder="Enter Name">
+                    <input type="text" class="form-control" id="name" formControlName="profileName" placeholder="Enter Name" (input)="onInputChange($event)">
                     @if (profileDetailsForm.get('profileName')?.invalid && (profileDetailsForm.get('profileName')?.touched ||
                     profileDetailsForm.get('profileName')?.dirty)) {
                     <div class="text-danger">
@@ -111,7 +111,7 @@
                 </div>
                 <div class="row d-flex justify-content-between">
                   <div>
-                    <button type="submit" class="btn btn-success btn-sm">Update Username</button>
+                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isDisabled">Update Username</button>
                   </div>
                 </div>
               </form>

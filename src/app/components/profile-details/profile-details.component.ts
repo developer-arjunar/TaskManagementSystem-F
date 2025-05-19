@@ -23,6 +23,7 @@ export class ProfileDetailsComponent implements OnInit {
   public isProfileUsernameActive: boolean = false;
   public isProfileDetailsUpdated: boolean = false;
   public isAccountDetailsUpdated: boolean = false;
+  public isDisabled: boolean = true;
 
   constructor(
     private storage: StorageService,
@@ -33,8 +34,6 @@ export class ProfileDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUserData = this.storage.getItem<{}>('loggedInUser');
-
-    console.log(this.currentUserData);
 
     this.initiateProfileDetailsForm();
     this.initiateAccountDetailsForm();
@@ -91,8 +90,10 @@ export class ProfileDetailsComponent implements OnInit {
 
     if(this.isProfileUsernameActive == true) {
       this.accountDetailsForm.get('profileUsername')?.enable();
+      this.isDisabled = false;
     } else {
       this.accountDetailsForm.get('profileUsername')?.disable();
+      this.isDisabled = true;
     }
   }
 
@@ -231,5 +232,10 @@ export class ProfileDetailsComponent implements OnInit {
                               );
                             }
                           }
+
+  onInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    console.log("Input Change : " + value);
+  }
 
 }
