@@ -59,10 +59,10 @@ export class UserFormComponent implements OnInit {
         userConfirmPassword: ['', Validators.required],
         userStatus: [{value: 1, disabled: !this.isUpdate}, Validators.required]
     },
-    { validators: [
-      this.passwordMatchValidator('userPassword', 'userConfirmPassword'),
-      this.usernameChecker('userUsername')
-    ]},
+    // { validators: [
+    //   this.passwordMatchValidator('userPassword', 'userConfirmPassword'),
+    //   this.usernameChecker('userUsername')
+    // ]},
   );
   }
 
@@ -151,6 +151,8 @@ export class UserFormComponent implements OnInit {
   }
 
   onSubmit() {
+      this.userForm.get('userStatus')?.enable();
+
       if(this.userForm.valid) {
         if(this.isUpdate == false) {
           let userData = {
@@ -164,7 +166,6 @@ export class UserFormComponent implements OnInit {
   
           console.log(userData);
           
-  
           this.userService.saveNewUser(userData).subscribe(
             (res: any[]) => {
               Swal.fire({
