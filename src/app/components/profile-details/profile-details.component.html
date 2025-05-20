@@ -19,7 +19,7 @@
                 <div class="row d-flex justify-content-between">
                   <div class="col-md-6 mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" formControlName="profileName" placeholder="Enter Name" (input)="onInputChange($event)">
+                    <input type="text" class="form-control" id="name" formControlName="profileName" placeholder="Enter Name" (input)="onProfileInputChange($event)">
                     @if (profileDetailsForm.get('profileName')?.invalid && (profileDetailsForm.get('profileName')?.touched ||
                     profileDetailsForm.get('profileName')?.dirty)) {
                     <div class="text-danger">
@@ -33,7 +33,7 @@
                 <div class="row d-flex justify-content-between">
                   <div class="col-md-6 mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="Email" class="form-control" id="email" formControlName="profileEmail" placeholder="Enter Email">
+                    <input type="Email" class="form-control" id="email" formControlName="profileEmail" placeholder="Enter Email" (input)="onProfileInputChange($event)">
                     @if (profileDetailsForm.get('profileEmail')?.invalid && (profileDetailsForm.get('profileEmail')?.touched ||
                     profileDetailsForm.get('profileEmail')?.dirty)) {
                     <div class="text-danger">
@@ -47,7 +47,7 @@
                 <div class="row d-flex justify-content-between">
                   <div class="col-md-6 mb-3">
                     <label for="phoneNo" class="form-label">Phone No.</label>
-                    <input type="text" class="form-control" id="phoneNo" formControlName="profilePhoneNo" placeholder="Enter Phone No.">
+                    <input type="text" class="form-control" id="phoneNo" formControlName="profilePhoneNo" placeholder="Enter Phone No." (input)="onProfileInputChange($event)">
                     @if (profileDetailsForm.get('profilePhoneNo')?.invalid && (profileDetailsForm.get('profilePhoneNo')?.touched ||
                     profileDetailsForm.get('profilePhoneNo')?.dirty)) {
                     <div class="text-danger">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="row d-flex justify-content-between">
                   <div>
-                    <button type="submit" class="btn btn-success btn-sm">Update Profile</button>
+                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isUpdateProfileDisabled">Update Profile</button>
                   </div>
                 </div>
               </form>
@@ -81,7 +81,7 @@
                 <div class="row d-flex justify-content-between">
                   <div class="col-md-6 mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" formControlName="profileUsername" placeholder="Enter Username">
+                    <input type="text" class="form-control" id="username" formControlName="profileUsername" placeholder="Enter Username" (input)="onUsernameInputChange($event)">
                     @if (accountDetailsForm.get('profileUsername')?.invalid && (accountDetailsForm.get('profileUsername')?.touched || accountDetailsForm.get('profileUsername')?.dirty)) {
                                                 <div class="text-danger">
                                                     @if (accountDetailsForm.get('profileUsername')?.errors?.['required']) {
@@ -111,7 +111,7 @@
                 </div>
                 <div class="row d-flex justify-content-between">
                   <div>
-                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isDisabled">Update Username</button>
+                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isUpdateUsernameDisabled">Update Username</button>
                   </div>
                 </div>
               </form>
@@ -186,7 +186,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-success btn-sm">Update Password</button>
-                  <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="viewPasswordChangeForm()">Hide</button>
+                  <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="viewPasswordChangeForm()">Cancel</button>
                 </form>
               }
             </div>

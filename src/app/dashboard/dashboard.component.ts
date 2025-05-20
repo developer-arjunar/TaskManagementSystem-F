@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { TaskService } from '../services/task.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,11 +36,17 @@ export class DashboardComponent implements OnInit {
     this.getTaskSummary();
     this.loadTaskAssigneeDropDown();
 
-    this.renderChart();
+    // this.renderChart();
   }
+
+  // ngAfterViewInit(): void {
+  //   this.renderChart();
+  // }
 
   renderChart(): void {
     // console.log(taskSummaryResponse.openedTasks);
+    console.log(this.taskSummary.openedTasks);
+    
     const ctx = this.salesChartRef.nativeElement.getContext('2d');
     new Chart(ctx, {
       type: 'polarArea',
@@ -48,8 +54,8 @@ export class DashboardComponent implements OnInit {
         labels: ['Opened', 'In Progress', 'Completed', 'Overdue'
         ],
         datasets: [{
-          label: 'My First Dataset',
-          data: [5, 8, 7, 1],
+          label: 'Tasks',
+          data: [this.taskSummary.openedTasks, this.taskSummary.inProgressTasks, this.taskSummary.completedTasks, this.taskSummary.overdueTasks],
           backgroundColor: [
             'rgb(91, 192, 222)',
             'rgb(255, 193, 7)',
@@ -95,6 +101,7 @@ export class DashboardComponent implements OnInit {
     this.taskService.getTaskSummary().subscribe(
       (res: any) => {
         this.taskSummary = res;
+        this.renderChart();
       },
       (error: any) => {
         console.log(error);

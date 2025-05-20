@@ -23,7 +23,12 @@ export class ProfileDetailsComponent implements OnInit {
   public isProfileUsernameActive: boolean = false;
   public isProfileDetailsUpdated: boolean = false;
   public isAccountDetailsUpdated: boolean = false;
-  public isDisabled: boolean = true;
+  public isUpdateUsernameDisabled: boolean = true;
+  public isUpdateProfileDisabled: boolean = true;
+  public textName: string = "";
+  public textEmail: string = "";
+  public textPhoneNo: string = "";
+  public textUsername: string = "";
 
   constructor(
     private storage: StorageService,
@@ -34,6 +39,11 @@ export class ProfileDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUserData = this.storage.getItem<{}>('loggedInUser');
+
+    this.textName = this.currentUserData.name;
+    this.textEmail = this.currentUserData.email;
+    this.textPhoneNo = this.currentUserData.phoneNo;
+    this.textUsername = this.currentUserData.username;
 
     this.initiateProfileDetailsForm();
     this.initiateAccountDetailsForm();
@@ -90,10 +100,8 @@ export class ProfileDetailsComponent implements OnInit {
 
     if(this.isProfileUsernameActive == true) {
       this.accountDetailsForm.get('profileUsername')?.enable();
-      this.isDisabled = false;
     } else {
       this.accountDetailsForm.get('profileUsername')?.disable();
-      this.isDisabled = true;
     }
   }
 
@@ -102,6 +110,10 @@ export class ProfileDetailsComponent implements OnInit {
       const username = userForm.get(usernameController);
 
       if (!username ) {
+        return null;
+      }
+
+      if (this.textUsername == username.value) {
         return null;
       }
 
@@ -147,95 +159,109 @@ export class ProfileDetailsComponent implements OnInit {
 
   updateProfileDetails() {
     if(this.profileDetailsForm.valid) {
-        let profileDetailsUpdateData = {
-          name: this.profileDetailsForm.value.profileName,
-          email: this.profileDetailsForm.value.profileEmail,
-          phoneNo: this.profileDetailsForm.value.profilePhoneNo
-        }
+      let profileDetailsUpdateData = {
+        name: this.profileDetailsForm.value.profileName,
+        email: this.profileDetailsForm.value.profileEmail,
+        phoneNo: this.profileDetailsForm.value.profilePhoneNo
+      }
       
+      this.userService.updateProfileDetails(this.currentUserData.id, profileDetailsUpdateData).subscribe(
+        (res: any[]) => {
+          Swal.fire({
+            title: "Good job!",
+            text: "Profile Details Updated Successfully..!",
+            icon: "success"
+          });
 
-    this.userService.updateProfileDetails(this.currentUserData.id, profileDetailsUpdateData).subscribe(
-                (res: any[]) => {
-                  Swal.fire({
-                    title: "Good job!",
-                    text: "Profile Details Updated Successfully..!",
-                    icon: "success"
-                  });
+          this.isProfileDetailsUpdated = true;
+        },
+        (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      );
+    }
+  }
 
-                  this.isProfileDetailsUpdated = true;
-                },
-                (error) => {
-                  Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!"
-                  });
-                }
-              );
-            }
-          }
-
-          updateAccountDetails() {
-            if(this.accountDetailsForm.valid) {
-                let accountDetailsUpdateData = {
-                  username: this.accountDetailsForm.value.profileUsername
-                }
+  updateAccountDetails() {
+    if(this.accountDetailsForm.valid) {
+      let accountDetailsUpdateData = {
+        username: this.accountDetailsForm.value.profileUsername
+      }
               
-        
-            this.userService.updateAccountDetails(this.currentUserData.id, accountDetailsUpdateData).subscribe(
-                        (res: any[]) => {
-                          Swal.fire({
-                            title: "Good job!",
-                            text: "Username Updated Successfully..!",
-                            icon: "success"
-                          });
+      this.userService.updateAccountDetails(this.currentUserData.id, accountDetailsUpdateData).subscribe(
+        (res: any[]) => {
+          Swal.fire({
+            title: "Good job!",
+            text: "Username Updated Successfully..!",
+            icon: "success"
+          });
 
-                          this.isAccountDetailsUpdated = true;
-                        },
-                        (error) => {
-                          Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Something went wrong!"
-                          });
-                        }
-                      );
-                    }
-                  }
+          this.isAccountDetailsUpdated = true;
+        },
+        (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      );
+    }
+  }
 
-                  updatePassword() {
-                    if(this.passwordForm.valid) {
-                        let passwordUpdateData = {
-                          oldPassword: this.passwordForm.value.profileOldPassword,
-                          newPassword: this.passwordForm.value.profileNewPassword
-                        }
+  updatePassword() {
+    if(this.passwordForm.valid) {
+      let passwordUpdateData = {
+        oldPassword: this.passwordForm.value.profileOldPassword,
+        newPassword: this.passwordForm.value.profileNewPassword
+      }
                       
-                
-                    this.userService.updatePassword(this.currentUserData.id, passwordUpdateData).subscribe(
-                                (res: any[]) => {
-                                  Swal.fire({
-                                    title: "Good job!",
-                                    text: "Password Updated Successfully..!",
-                                    icon: "success"
-                                  });
+      this.userService.updatePassword(this.currentUserData.id, passwordUpdateData).subscribe(
+        (res: any[]) => {
+          Swal.fire({
+            title: "Good job!",
+            text: "Password Updated Successfully..!",
+            icon: "success"
+          });
 
-                                  this.showPasswordChangeForm = !this.showPasswordChangeForm;
-                                  this.passwordForm.reset();
-                                },
-                                (error) => {
-                                  Swal.fire({
-                                    icon: "error",
-                                    title: "Oops...",
-                                    text: "Something went wrong!"
-                                  });
-                                }
-                              );
-                            }
-                          }
+          this.showPasswordChangeForm = !this.showPasswordChangeForm;
+          this.passwordForm.reset();
+        },
+        (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      );
+    }
+  }
 
-  onInputChange(event: Event) {
+  onProfileInputChange(event: Event) {
+    const name = this.profileDetailsForm.value.profileName;
+    const email = this.profileDetailsForm.value.profileEmail;
+    const phoneNo = this.profileDetailsForm.value.profilePhoneNo;
+
+    if (this.textName == name && this.textEmail == email && this.textPhoneNo == phoneNo) {
+      this.isUpdateProfileDisabled = true;
+    } else {
+      this.isUpdateProfileDisabled = false;
+    }
+  }
+
+  onUsernameInputChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    console.log("Input Change : " + value);
+
+    if (this.textUsername === value) {
+      this.isUpdateUsernameDisabled = true;
+    } else {
+      this.isUpdateUsernameDisabled = false;
+    }
   }
 
 }
