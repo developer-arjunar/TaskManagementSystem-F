@@ -1,27 +1,182 @@
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
+import Swal from 'sweetalert2';
+import { StorageService } from '../../services/storage.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm! : FormGroup;
+
   username = '';
   password = '';
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  public user: any = {};
 
-  onSubmit() {
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.errorMessage = 'Invalid username or password';
-    }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private httpClient: HttpClient,
+    private storage: StorageService
+  ) {}
+
+  ngOnInit(): void {
+    this.storage.clear();
+    this.initiateLoginForm();
   }
+
+  initiateLoginForm() {
+      this.loginForm = this.fb.group({
+        loginUsername: ['', Validators.required],
+        loginPassword: ['', Validators.required]
+      });
+    }
+
+    // onSubmit() {
+    //   if (this.authService.login(this.loginForm.value.loginUsername, this.loginForm.value.loginPassword)) {
+    //     this.router.navigate(['/dashboard']);
+    //   } else {
+    //     this.errorMessage = 'Invalid username or password';
+    //   }
+    // }
+
+
+    onSubmit() {
+      let userAuthenticationData = {
+        username: this.loginForm.value.loginUsername,
+        password: this.loginForm.value.loginPassword
+      }
+
+      this.httpClient.post('http://localhost:5087/api/Users/AuthenticateUser', userAuthenticationData, {
+        observe: 'response'
+      }).subscribe({
+        next: (response) => {
+          this.user = response.body;
+
+          if (this.user.status == 1) {
+            if (this.authService.login(response.status)) {
+              this.storage.setItem('loggedInUser', response.body);
+  
+              this.router.navigate(['/dashboard']);
+  
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Signed in successfully"
+              });
+            }
+          } else {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: "User inactivated. Please contact the ADMIN."
+            });
+
+            this.loginForm.reset();
+          }
+        },
+        error: (error) => {
+          // console.log(error);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Invalid Username or Password."
+          });
+        }
+      });
+    }
+
+  // onSubmit() {
+  //   let userAuthenticationData = {
+  //     username: this.loginForm.value.loginUsername,
+  //     password: this.loginForm.value.loginPassword
+  //   }
+
+  //   this.authService.authenticateUser(userAuthenticationData).subscribe(
+  //             (res: any) => {
+
+  //               console.log(res);
+                
+                
+  //               this.storage.setItem('loggedInUser', res.body);
+
+  //               this.router.navigate(['/dashboard']);
+                
+                
+
+  //               const Toast = Swal.mixin({
+  //                 toast: true,
+  //                 position: "top-end",
+  //                 showConfirmButton: false,
+  //                 timer: 3000,
+  //                 timerProgressBar: true,
+  //                 didOpen: (toast) => {
+  //                   toast.onmouseenter = Swal.stopTimer;
+  //                   toast.onmouseleave = Swal.resumeTimer;
+  //                 }
+  //               });
+  //               Toast.fire({
+  //                 icon: "success",
+  //                 title: "Signed in successfully"
+  //               });
+  //             },
+  //             (error) => {
+  //               const Toast = Swal.mixin({
+  //                 toast: true,
+  //                 position: "top-end",
+  //                 showConfirmButton: false,
+  //                 timer: 3000,
+  //                 timerProgressBar: true,
+  //                 didOpen: (toast) => {
+  //                   toast.onmouseenter = Swal.stopTimer;
+  //                   toast.onmouseleave = Swal.resumeTimer;
+  //                 }
+  //               });
+  //               Toast.fire({
+  //                 icon: "error",
+  //                 title: "Invalid Username or Password."
+  //               });
+  //             }
+  //           );
+  // }
 }

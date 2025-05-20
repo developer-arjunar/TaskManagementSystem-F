@@ -1,0 +1,235 @@
+.profile .page-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile .page-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.profile .page-header .breadcrumb {
+    margin-bottom: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.profile .page-header .breadcrumb .breadcrumb-item {
+    font-size: 0.9rem;
+}
+
+.profile .page-header .breadcrumb .breadcrumb-item.active {
+    color: #6c757d;
+}
+
+.profile .page-header .breadcrumb .breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.profile .page-header .breadcrumb .breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.profile .stat-card {
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+/* .profile .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+} */
+
+.profile .stat-card .card-body {
+    padding: 20px;
+}
+
+.profile .stat-card .card-body h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.profile .stat-card .card-body hr .top-line{
+    margin-top: 0.5rem;
+}
+
+.profile .stat-card .card-body .stat-info h5 {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.profile .stat-card .card-body .stat-info h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.profile .stat-card .card-body .stat-info span {
+    font-size: 0.8rem;
+}
+
+.profile .stat-card .card-body .stat-info span.text-success {
+    color: #28a745;
+}
+
+.profile .stat-card .card-body .stat-info span.text-danger {
+    color: #dc3545;
+}
+
+.profile .stat-card .card-body .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.profile .stat-card .card-body .stat-icon.bg-primary {
+    background: #3c8dbc;
+}
+
+.profile .stat-card .card-body .stat-icon.bg-success {
+    background: #00a65a;
+}
+
+.profile .stat-card .card-body .stat-icon.bg-warning {
+    background: #f39c12;
+}
+
+.profile .stat-card .card-body .stat-icon.bg-info {
+    background: #00c0ef;
+}
+
+.profile .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.profile .card .card-header {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.profile .card .card-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.profile .card .card-body {
+    padding: 20px;
+}
+
+.profile .activity-list .activity-item {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.profile .activity-list .activity-item:last-child {
+    border-bottom: none;
+}
+
+.profile .activity-list .activity-item .activity-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.profile .activity-list .activity-item .activity-icon.bg-primary {
+    background: #3c8dbc;
+}
+
+.profile .activity-list .activity-item .activity-icon.bg-success {
+    background: #00a65a;
+}
+
+.profile .activity-list .activity-item .activity-icon.bg-info {
+    background: #00c0ef;
+}
+
+.profile .activity-list .activity-item .activity-icon.bg-warning {
+    background: #f39c12;
+}
+
+.profile .activity-list .activity-item .activity-icon.bg-danger {
+    background: #dd4b39;
+}
+
+.profile .activity-list .activity-item .activity-content {
+    flex: 1;
+}
+
+.profile .activity-list .activity-item .activity-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.profile .activity-list .activity-item .activity-content small {
+    font-size: 0.8rem;
+}
+
+.profile .table th,
+.profile .table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.profile .table thead th {
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+
+.profile .table tbody tr {
+    transition: all 0.2s;
+}
+
+.profile .table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.profile .table .badge {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.profile-icon {
+    /* color: rgb(66, 153, 225); */
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* background: rgba(66, 153, 225, 0.1); */
+    /* border-radius: 6px; */
+    /* padding: 5px; */
+    /* transition: 0.3s; */
+}

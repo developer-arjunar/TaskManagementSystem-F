@@ -1,23 +1,32 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  API_URL = environment.BASE_URL;
+
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient,
+    private storage: StorageService
+  ) { }
 
-  login(username: string, password: string): boolean {
-    if (username === 'admin' && password === 'admin123') {
+  login(statusCode: any): boolean {
+    if (statusCode == 200) {
       this.loggedIn.next(true);
-      localStorage.setItem('isLoggedIn', 'true');
+      this.storage.setItem('isLoggedIn', 'true');
       return true;
     }
     return false;
@@ -25,7 +34,7 @@ export class AuthService {
 
   logout() {
     this.loggedIn.next(false);
-    localStorage.removeItem('isLoggedIn');
+    this.storage.removeItem('isLoggedIn');
     this.router.navigate(['/login']);
   }
 }

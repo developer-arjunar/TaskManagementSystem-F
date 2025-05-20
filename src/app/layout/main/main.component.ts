@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-main',
@@ -9,9 +10,12 @@ import { AuthService } from '../../core/auth.service';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+  public currentUserData: any = {};
+
+
   isSidebarCollapsed = false;
-  currentUser = 'Admin User';
+  public currentUser: any = "";
   currentUserRole = 'ADMIN';
   
   navItems = [
@@ -23,13 +27,25 @@ export class MainComponent {
     // { label: 'Reports', icon: 'chart-bar', link: '/reports', active: false }
   ];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private storage: StorageService
+  ) {}
+
+  ngOnInit(): void {
+    // const loggedInUserData = localStorage.getItem('loggedInUser');
+
+    this.currentUserData = this.storage.getItem<{}>('loggedInUser');
+
+    this.currentUser = this.currentUserData.name;
+  }
 
   toggleSidebar() {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
   }
 
   logout() {
+    // this.storage.clear();
     this.authService.logout();
   }
 }

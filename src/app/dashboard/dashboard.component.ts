@@ -1,47 +1,68 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { TaskService } from '../services/task.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StorageService } from '../services/storage.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
+  taskAssigneeForm! : FormGroup;
+  
+  public taskSummary: any = {};
+  public currentUserData: any = {};
+  public usersList: Array<any> = [];
+
   @ViewChild('salesChart', { static: true }) salesChartRef!: ElementRef;
 
+  constructor(
+    private fb: FormBuilder,
+    private taskService: TaskService,
+    private userService: UserService,
+    private storage: StorageService
+  ) {}
+
   ngOnInit(): void {
+    this.currentUserData = this.storage.getItem<{}>('loggedInUser');
+    
     Chart.register(...registerables);
-    this.renderChart();
+
+    this.getTaskSummary();
+    this.loadTaskAssigneeDropDown();
+
+    // this.renderChart();
   }
 
+  // ngAfterViewInit(): void {
+  //   this.renderChart();
+  // }
+
   renderChart(): void {
+    // console.log(taskSummaryResponse.openedTasks);
+    console.log(this.taskSummary.openedTasks);
+    
     const ctx = this.salesChartRef.nativeElement.getContext('2d');
     new Chart(ctx, {
-      type: 'line',
+      type: 'polarArea',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
-          {
-            label: 'Sales',
-            data: [12000, 19000, 15000, 18000, 22000, 25000, 21000, 23000, 28000, 30000, 32000, 35000],
-            backgroundColor: 'rgba(60, 141, 188, 0.2)',
-            borderColor: 'rgba(60, 141, 188, 1)',
-            borderWidth: 2,
-            tension: 0.4,
-            fill: true
-          },
-          {
-            label: 'Revenue',
-            data: [8000, 12000, 10000, 15000, 18000, 20000, 17000, 19000, 22000, 25000, 28000, 30000],
-            backgroundColor: 'rgba(0, 166, 90, 0.2)',
-            borderColor: 'rgba(0, 166, 90, 1)',
-            borderWidth: 2,
-            tension: 0.4,
-            fill: true
-          }
-        ]
+        labels: ['Opened', 'In Progress', 'Completed', 'Overdue'
+        ],
+        datasets: [{
+          label: 'Tasks',
+          data: [this.taskSummary.openedTasks, this.taskSummary.inProgressTasks, this.taskSummary.completedTasks, this.taskSummary.overdueTasks],
+          backgroundColor: [
+            'rgb(91, 192, 222)',
+            'rgb(255, 193, 7)',
+            'rgb(25, 135, 84)',
+            'rgb(214, 70, 92)'
+          ]
+        }]
       },
       options: {
         responsive: true,
@@ -54,18 +75,37 @@ export class DashboardComponent implements OnInit {
             mode: 'index',
             intersect: false,
           }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                return '$' + value.toLocaleString();
-              }
-            }
-          }
         }
       }
     });
+  }
+
+  initiateForm() {
+    this.taskAssigneeForm = this.fb.group({
+      taskAssignee: ['']
+    });
+  }
+
+  loadTaskAssigneeDropDown(): void {
+    this.userService.getAllUsers().subscribe(
+      (res: any[]) => {
+      this.usersList = res;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTaskSummary() {
+    this.taskService.getTaskSummary().subscribe(
+      (res: any) => {
+        this.taskSummary = res;
+        this.renderChart();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 }

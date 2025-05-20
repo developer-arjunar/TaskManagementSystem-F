@@ -1,0 +1,199 @@
+<div class="profile">
+  <div class="page-header">
+    <h1>Profile</h1>
+  </div>
+
+
+  <div class="d-flex justify-content-center">
+    <div class="col-md-12">
+      <div class="card stat-card">
+
+        <div class="card-body">
+          <!-- <hr class="top-line"> -->
+          <div class="d-flex align-self-start">
+            <div class="col-md-3">
+              <h1>Profile Details</h1>
+            </div>
+            <div class="col-md-9">
+              <form [formGroup]="profileDetailsForm" (ngSubmit)="updateProfileDetails()">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" formControlName="profileName" placeholder="Enter Name" (input)="onProfileInputChange($event)">
+                    @if (profileDetailsForm.get('profileName')?.invalid && (profileDetailsForm.get('profileName')?.touched ||
+                    profileDetailsForm.get('profileName')?.dirty)) {
+                    <div class="text-danger">
+                      @if (profileDetailsForm.get('profileName')?.errors?.['required']) {
+                      <small>Name is required.</small>
+                      }
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="Email" class="form-control" id="email" formControlName="profileEmail" placeholder="Enter Email" (input)="onProfileInputChange($event)">
+                    @if (profileDetailsForm.get('profileEmail')?.invalid && (profileDetailsForm.get('profileEmail')?.touched ||
+                    profileDetailsForm.get('profileEmail')?.dirty)) {
+                    <div class="text-danger">
+                      @if (profileDetailsForm.get('profileEmail')?.errors?.['required']) {
+                      <small>Email is required.</small>
+                      }
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <label for="phoneNo" class="form-label">Phone No.</label>
+                    <input type="text" class="form-control" id="phoneNo" formControlName="profilePhoneNo" placeholder="Enter Phone No." (input)="onProfileInputChange($event)">
+                    @if (profileDetailsForm.get('profilePhoneNo')?.invalid && (profileDetailsForm.get('profilePhoneNo')?.touched ||
+                    profileDetailsForm.get('profilePhoneNo')?.dirty)) {
+                    <div class="text-danger">
+                      @if (profileDetailsForm.get('profilePhoneNo')?.errors?.['required']) {
+                      <small>Phone No. is required.</small>
+                      }
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div>
+                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isUpdateProfileDisabled">Update Profile</button>
+                  </div>
+                </div>
+              </form>
+              @if (isProfileDetailsUpdated == true) {
+              <div class="text-danger">
+                <small>*Please logout & login again to appear changes.</small>
+              </div>
+              }
+            </div>
+          </div>
+          <hr>
+          <div class="d-flex align-self-start">
+            <div class="col-md-3">
+              <h1>Account Details</h1>
+            </div>
+            <div class="col-md-9">
+              <form [formGroup]="accountDetailsForm" (ngSubmit)="updateAccountDetails()">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" formControlName="profileUsername" placeholder="Enter Username" (input)="onUsernameInputChange($event)">
+                    @if (accountDetailsForm.get('profileUsername')?.invalid && (accountDetailsForm.get('profileUsername')?.touched || accountDetailsForm.get('profileUsername')?.dirty)) {
+                                                <div class="text-danger">
+                                                    @if (accountDetailsForm.get('profileUsername')?.errors?.['required']) {
+                                                        <small>Username is required.</small>
+                                                    } @else if (accountDetailsForm.get('profileUsername')?.errors?.['usernameTaken']) {
+                                                        <small>This username is already taken. Please try a different one.</small>
+                                                    <!-- }  
+                                                    @else if (accountDetailsForm.get('profileUsername')?.errors?.['minlength']) {
+                                                        <small>The username should be at least 6 characters long.</small> -->
+                                                    }
+                                                </div>
+                                            }
+                  </div>
+                  <div class="col-md-6 align-self-end" style="margin-bottom: 20px;">
+                    @if (isProfileUsernameActive == false) {
+                      <button type="button" class="btn btn-outline-danger btn-sm" (click)="toggleProfileUsername()">Change Username</button>
+                    } @else {
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="toggleProfileUsername()">Cancel</button>
+                    }
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div class="col-md-6 mb-3">
+                    <label for="joinedDate" class="form-label">Joined Date</label>
+                    <input type="text" class="form-control" id="joinedDate" formControlName="profileJoinedDate">
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                  <div>
+                    <button type="submit" class="btn btn-success btn-sm" [disabled]="isUpdateUsernameDisabled">Update Username</button>
+                  </div>
+                </div>
+              </form>
+              @if (isAccountDetailsUpdated == true) {
+                <div class="text-danger">
+                  <small>*Please logout & login again to appear changes.</small>
+                </div>
+                }
+            </div>
+          </div>
+          <hr>
+          <div class="d-flex align-self-start">
+            <div class="col-md-3">
+              <h1>Password</h1>
+            </div>
+            <div class="col-md-9">
+              @if (showPasswordChangeForm == false) {
+                <div class="row d-flex justify-content-between">
+                  <div>
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="viewPasswordChangeForm()">Change Password</button>
+                  </div>
+                </div>
+              }
+              @if (showPasswordChangeForm == true) {
+                <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+                  <div class="row d-flex justify-content-between">
+                    <div class="col-md-6 mb-3">
+                      <label for="oldPassword" class="form-label">Old Password</label>
+                      <input type="Password" class="form-control" id="oldPassword" formControlName="profileOldPassword"
+                        placeholder="Enter Old Password">
+                      @if (passwordForm.get('profileOldPassword')?.invalid && (passwordForm.get('profileOldPassword')?.touched ||
+                      passwordForm.get('profileOldPassword')?.dirty)) {
+                      <div class="text-danger">
+                        @if (passwordForm.get('profileOldPassword')?.errors?.['required']) {
+                        <small>Password is required.</small>
+                        }
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-between">
+                    <div class="col-md-6 mb-3">
+                      <label for="newPassword" class="form-label">New Password</label>
+                      <input type="Password" class="form-control" id="newPassword" formControlName="profileNewPassword"
+                        placeholder="Enter New Password">
+                      @if (passwordForm.get('profileNewPassword')?.invalid && (passwordForm.get('profileNewPassword')?.touched ||
+                      passwordForm.get('profileNewPassword')?.dirty)) {
+                      <div class="text-danger">
+                        @if (passwordForm.get('profileNewPassword')?.errors?.['required']) {
+                        <small>Password is required.</small>
+                        } @else if (passwordForm.get('profileNewPassword')?.errors?.['minlength']) {
+                        <small>The password should be at least 6 characters long.</small>
+                        }
+                      </div>
+                      }
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                      <input type="Password" class="form-control" id="confirmNewPassword" formControlName="profileConfirmNewPassword"
+                        placeholder="Confirm New Password">
+                      @if (passwordForm.get('profileConfirmNewPassword')?.invalid && (passwordForm.get('profileConfirmNewPassword')?.touched
+                      || passwordForm.get('profileConfirmNewPassword')?.dirty)) {
+                      <div class="text-danger">
+                        @if (passwordForm.get('profileConfirmNewPassword')?.errors?.['required']) {
+                        <small>Confirm Password is required.</small>
+                        }
+                        @else if (passwordForm.get('profileConfirmNewPassword')?.errors?.['passwordMismatch']) {
+                        <small>Passwords don't match.</small>
+                        }
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-sm">Update Password</button>
+                  <button type="button" class="btn btn-secondary btn-sm ms-2" (click)="viewPasswordChangeForm()">Cancel</button>
+                </form>
+              }
+            </div>
+          </div>
+          <!-- <hr class="bottom-line"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

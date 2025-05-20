@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-xl-3">
+        <!-- <div class="col-md-6 col-xl-3">
             <div class="card stat-card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="col-md-6 col-xl-3">
             <div class="card stat-card">
@@ -32,10 +32,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="stat-info">
                             <h4 class="card-title">Opened</h4>
-                            <h3 class="mb-0">$34,245</h3>
-                            <span class="text-success">+8% <i class="fas fa-arrow-up"></i></span>
+                            <h3 class="mb-0">{{ taskSummary.openedTasks }}</h3>
                         </div>
-                        <div class="stat-icon bg-success">
+                        <div class="stat-icon bg-info">
                             <i class="fas fa-folder-plus"></i>
                         </div>
                     </div>
@@ -49,8 +48,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="stat-info">
                             <h4 class="card-title">In Progress</h4>
-                            <h3 class="mb-0">1,458</h3>
-                            <span class="text-danger">-3% <i class="fas fa-arrow-down"></i></span>
+                            <h3 class="mb-0">{{ taskSummary.inProgressTasks }}</h3>
                         </div>
                         <div class="stat-icon bg-warning">
                             <i class="fas fa-spinner fa-pulse"></i>
@@ -66,13 +64,80 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="stat-info">
                             <h4 class="card-title">Completed</h4>
-                            <h3 class="mb-0">124</h3>
-                            <span class="text-success">+4% <i class="fas fa-arrow-up"></i></span>
+                            <h3 class="mb-0">{{ taskSummary.completedTasks }}</h3>
                         </div>
-                        <div class="stat-icon bg-info">
+                        <div class="stat-icon bg-success">
                             <i class="fas fa-check"></i>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="stat-info">
+                            <h4 class="card-title">Overdue</h4>
+                            <h3 class="mb-0">{{ taskSummary.overdueTasks }}</h3>
+                        </div>
+                        <div class="stat-icon bg-danger">
+                            <i class="fa-solid fa-question"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-12">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="stat-info">
+                        <h4 class="card-title">Overdue</h4>
+                        <h3 class="mb-0">1,254</h3>
+                        <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
+                    </div>
+                    <div class="stat-icon bg-danger">
+                        <i class="fa-solid fa-question"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Tasks Overview</h5>
+            </div>
+            <div class="card-body">
+                <!-- <div class="d-flex justify-content-between"> -->
+                    <!-- @if (currentUserData.role.name === 'ADMIN') {
+                    <div class="col-auto">
+                      <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                          <label for="taskAssignee" class="col-form-label">Task Assignee</label>
+                        </div>
+                        <div class="col-auto">
+                          <form [formGroup]="taskAssigneeForm">
+                            <select id="taskAssignee" class="form-select form-select-sm" formControlName="taskAssignee">
+                              <option value="" disabled selected>Select Task Assignee</option>
+                              <option value="ALL">All</option>
+                              @for (assignee of usersList; track assignee.id) {
+                              <option value='{{ assignee.id }}'>{{ assignee.name }}</option>
+                              }
+                            </select>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    } -->
+                <!-- </div> -->
+                <div class="chart-container mb-3" style="height: 500px;">
+                        <canvas #salesChart></canvas>
                 </div>
             </div>
         </div>
