@@ -213,7 +213,16 @@
 
 @media (max-width: 992px) {
     .sidebar {
-        transform: translateX(0);
+        width: 70px;
+        /* transform: translateX(0); */
+    }
+
+    .sidebar .nav-text {
+        display: none;
+    }
+
+    .sidebar .sidebar-header h3 {
+        display: none;
     }
 
     .sidebar.collapsed {
@@ -225,8 +234,8 @@
     }
 
     .main-content {
-        margin-left: 0;
-        width: 100%;
+        margin-left: 70px;
+        width: calc(100% - 70px);
     }
 
     .top-nav .nav-left .mobile-toggle {
