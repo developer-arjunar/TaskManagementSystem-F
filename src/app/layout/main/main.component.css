@@ -39,7 +39,10 @@
 }
 
 .sidebar .sidebar-header {
-    padding: 20px;
+    padding-top: 17px;
+    padding-right: 20px;
+    padding-bottom: 17px;
+    padding-left: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;

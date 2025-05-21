@@ -75,7 +75,12 @@
         <header class="top-nav">
             <div class="nav-left">
                 <button class="mobile-toggle" (click)="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
+                    @if (isSidebarCollapsed == true) {
+                        <i class="fa-solid fa-bars"></i>
+                    } 
+                    <!-- @else {
+                        <i class="fa-solid fa-xmark"></i>
+                    } -->
                 </button>
                 <!-- <div class="search-box">
                     <input type="text" placeholder="Search...">
