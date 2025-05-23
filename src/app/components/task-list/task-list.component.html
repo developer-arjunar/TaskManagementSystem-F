@@ -262,6 +262,8 @@
                         <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
                       } @else if (task.status == 'COMPLETED') {
                         <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'OVERDUE') {
+                        <h6><span class="badge rounded-pill text-bg-danger">{{ task.status }}</span></h6>
                       }
                     </div>
                   </div>
