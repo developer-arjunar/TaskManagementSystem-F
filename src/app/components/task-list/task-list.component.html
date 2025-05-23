@@ -230,11 +230,12 @@
             Completed Tasks
           </button>
           <button class="nav-link" id="nav-overdue-tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-overdue-tasks"
-            type="button" role="tab" aria-controls="nav-overdue-tasks" aria-selected="false">
+            type="button" role="tab" aria-controls="nav-overdue-tasks" aria-selected="false" (click)="loadTasksByNavbarChange('OVERDUE')">
             Overdue Tasks
           </button>
         </div>
       </nav>
+
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-all-tasks" role="tabpanel" aria-labelledby="nav-all-tasks-tab"
           tabindex="0">
@@ -307,6 +308,7 @@
             }
           </div>
         </div>
+
         <div class="tab-pane fade" id="nav-pending-tasks" role="tabpanel" aria-labelledby="nav-pending-tasks-tab"
           tabindex="0">
           <div class="row">
@@ -333,6 +335,8 @@
                         <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
                       } @else if (task.status == 'COMPLETED') {
                         <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'OVERDUE') {
+                        <h6><span class="badge rounded-pill text-bg-danger">{{ task.status }}</span></h6>
                       }
                     </div>
                   </div>
@@ -376,6 +380,7 @@
             }
           </div>
         </div>
+
         <div class="tab-pane fade" id="nav-in-progress-tasks" role="tabpanel" aria-labelledby="nav-in-progress-tasks-tab"
           tabindex="0">
           <div class="row">
@@ -402,6 +407,8 @@
                         <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
                       } @else if (task.status == 'COMPLETED') {
                         <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'OVERDUE') {
+                        <h6><span class="badge rounded-pill text-bg-danger">{{ task.status }}</span></h6>
                       }
                     </div>
                   </div>
@@ -471,6 +478,8 @@
                         <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
                       } @else if (task.status == 'COMPLETED') {
                         <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'OVERDUE') {
+                        <h6><span class="badge rounded-pill text-bg-danger">{{ task.status }}</span></h6>
                       }
                     </div>
                   </div>
@@ -516,26 +525,74 @@
         </div>
         <div class="tab-pane fade" id="nav-overdue-tasks" role="tabpanel" aria-labelledby="nav-overdue-tasks-tab"
           tabindex="0">
-          <!-- <div class="row">
+          <div class="row">
             @for (task of tasksList; track task.id; let i = $index) {
             <div class="col-md-6 col-xl-4">
               <div class="card stat-card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="stat-info">
-                      <h4 class="card-title">All Tasks</h4>
+                    <!-- <div class="stat-info">
+                      <h4 class="card-title">{{ task.name }}</h4>
                       <h3 class="mb-0">1,254</h3>
                       <span class="text-success">+12% <i class="fas fa-arrow-up"></i></span>
                     </div>
                     <div class="stat-icon bg-primary">
                       <i class="fas fa-tasks"></i>
+                    </div> -->
+                    <div>
+                      <h6><span class="badge text-bg-secondary rounded-pill">#{{ i + 1 }}</span></h6>
                     </div>
+                    <div>
+                      @if (task.status == 'OPENED') {
+                        <h6><span class="badge rounded-pill text-bg-info">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'IN PROGRESS') {
+                        <h6><span class="badge rounded-pill text-bg-warning">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'COMPLETED') {
+                        <h6><span class="badge rounded-pill text-bg-success">{{ task.status }}</span></h6>
+                      } @else if (task.status == 'OVERDUE') {
+                        <h6><span class="badge rounded-pill text-bg-danger">{{ task.status }}</span></h6>
+                      }
+                    </div>
+                  </div>
+                  <!-- <div class="d-flex flex-row mb-3"> -->
+                    <!-- <div>
+                      <i class="fas fa-tasks"></i>
+                    </div> -->
+                  <!-- </div> -->
+                  <h5>{{ task.name }}</h5>
+                  <!-- <div class="d-flex justify-content-between"> -->
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #0D6EFD;"></i>
+                      <span style="margin-left: 15px; color: #0D6EFD;">Assingned Date : {{ task.createdDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                    <div>
+                      <i class="fas fa-calendar-alt" style="color: #DC4C64;"></i>
+                      <span style="margin-left: 15px; color: #DC4C64;">Due Date : {{ task.dueDate | date: "yyyy'-'MM'-'dd" }}</span>
+                    </div>
+                  <!-- </div> -->
+                  <div>
+                    <i class="fas fa-comments" style="color: #9FA6B2;"></i>
+                    <span style="margin-left: 10px; color: #9FA6B2;">{{ task.comments.length }}</span>
+                  </div>
+                  <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="getTaskView(task.id)">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-secondary ms-2" (click)="navigateToEditForm(task.id)">
+                    <i class="fas fa-pen-to-square"></i>
+                  </button>
+                  @if (currentUserData.role.name === 'ADMIN') {
+                    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteTaskById(task.id)">
+                      <i class="fas fa-trash-can"></i>
+                    </button>
+                  }
                   </div>
                 </div>
               </div>
             </div>
             }
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -571,7 +628,7 @@
                     <span class="badge rounded-pill text-bg-warning">{{ taskById.status }}</span>
                     } @else if (taskById.status == 'COMPLETED') {
                     <span class="badge rounded-pill text-bg-success">{{ taskById.status }}</span>
-                    }
+                    } 
                   </div>
   
                   <div class="col-md-6">
